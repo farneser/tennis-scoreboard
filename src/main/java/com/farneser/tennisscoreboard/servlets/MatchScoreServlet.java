@@ -1,5 +1,6 @@
 package com.farneser.tennisscoreboard.servlets;
 
+import com.farneser.tennisscoreboard.data.dto.WinnerType;
 import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatchesService;
 import com.farneser.tennisscoreboard.data.utils.ParseParamsUtil;
 import jakarta.servlet.ServletException;
@@ -25,5 +26,22 @@ public class MatchScoreServlet extends HttpServlet {
         );
 
         getServletContext().getRequestDispatcher("/match-score.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        var matchScore = ParseParamsUtil.ParsePostMatchScope(req);
+
+        var currentMatch = currentMatchesService.get(matchScore.getId());
+
+        if (matchScore.getWinner() == WinnerType.FirstPlayer) {
+            currentMatch.setFirstPlayerScore(currentMatch.getFirstPlayerScore() + 1);
+        } else {
+            currentMatch.setSecondPlayerScore(currentMatch.getSecondPlayerScore() + 1);
+        }
+
+        resp.sendRedirect("match-score?uuid=" + matchScore.getId());
+
     }
 }
