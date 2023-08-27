@@ -3,6 +3,8 @@ package com.farneser.tennisscoreboard.data.utils;
 import com.farneser.tennisscoreboard.data.dto.CreateMatchDto;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.UUID;
+
 public class ParseParamsUtil {
 
     public static CreateMatchDto ParsePostNewMatch(HttpServletRequest req) {
@@ -14,6 +16,13 @@ public class ParseParamsUtil {
         var player2 = req.getParameter("player2");
 
         return new CreateMatchDto(player1, player2);
+    }
+
+    public static UUID ParseGetMatchScore(HttpServletRequest req){
+
+        var id = req.getParameter("uuid");
+
+        return UUID.fromString(id);
     }
 
 }
