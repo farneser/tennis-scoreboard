@@ -1,4 +1,4 @@
-package com.farneser.tennisscoreboard.data;
+package com.farneser.tennisscoreboard.data.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
