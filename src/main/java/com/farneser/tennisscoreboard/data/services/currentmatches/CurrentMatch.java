@@ -1,12 +1,14 @@
 package com.farneser.tennisscoreboard.data.services.currentmatches;
 
 import com.farneser.tennisscoreboard.data.entities.Player;
+import lombok.Data;
 
 import java.util.UUID;
 
+@Data
 public class CurrentMatch {
 
-    private UUID id;
+    private final UUID id;
     private final Player firstPlayer;
     private final Player secondPlayer;
     private Player winnerPlayer;
