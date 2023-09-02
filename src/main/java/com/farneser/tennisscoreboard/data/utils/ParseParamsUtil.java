@@ -1,7 +1,7 @@
 package com.farneser.tennisscoreboard.data.utils;
 
 import com.farneser.tennisscoreboard.data.dto.CreateMatchDto;
-import com.farneser.tennisscoreboard.data.dto.MatchScoreDto;
+import com.farneser.tennisscoreboard.data.dto.GameScoreDto;
 import com.farneser.tennisscoreboard.data.dto.WinnerType;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -16,8 +16,13 @@ public class ParseParamsUtil {
 
         var player1 = req.getParameter("player1");
         var player2 = req.getParameter("player2");
+        var setsCount = Integer.parseInt(req.getParameter("setsCount"));
 
-        return new CreateMatchDto(player1, player2);
+        if (setsCount != 3 && setsCount != 5) {
+            setsCount = 3;
+        }
+
+        return new CreateMatchDto(player1, player2, setsCount);
     }
 
     public static UUID ParseGetMatchScore(HttpServletRequest req) {
@@ -27,7 +32,7 @@ public class ParseParamsUtil {
         return UUID.fromString(id);
     }
 
-    public static MatchScoreDto ParsePostMatchScope(HttpServletRequest req) {
+    public static GameScoreDto ParsePostMatchScope(HttpServletRequest req) {
         var id = ParseParamsUtil.ParseGetMatchScore(req);
 
         var winner = WinnerType.FirstPlayer;
@@ -36,7 +41,7 @@ public class ParseParamsUtil {
             winner = WinnerType.SecondPlayer;
         }
 
-        return new MatchScoreDto(id, winner);
+        return new GameScoreDto(id, winner);
     }
 
 }
