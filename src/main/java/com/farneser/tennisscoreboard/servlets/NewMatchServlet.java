@@ -27,7 +27,8 @@ public class NewMatchServlet extends HttpServlet {
 
         var id = currentMatchesService.create(
                 new Player(createMatchDto.getFirstPlayerName()),
-                new Player(createMatchDto.getSecondPlayerName())
+                new Player(createMatchDto.getSecondPlayerName()),
+                createMatchDto.getSetsCount()
         );
 
         resp.sendRedirect("match-score?uuid=" + id);

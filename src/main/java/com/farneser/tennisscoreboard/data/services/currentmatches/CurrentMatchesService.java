@@ -11,7 +11,6 @@ public class CurrentMatchesService {
     private static CurrentMatchesService instance;
 
     private CurrentMatchesService() {
-
     }
 
     public static CurrentMatchesService getInstance() {
@@ -23,10 +22,10 @@ public class CurrentMatchesService {
         return instance;
     }
 
-    public UUID create(Player firstPlayer, Player secondPlayer) {
+    public UUID create(Player firstPlayer, Player secondPlayer, int setsCount) {
         var id = UUID.randomUUID();
 
-        var currentMatch = new CurrentMatch(id, firstPlayer, secondPlayer);
+        var currentMatch = new CurrentMatch(id, firstPlayer, secondPlayer, setsCount);
 
         matches.put(id, currentMatch);
 

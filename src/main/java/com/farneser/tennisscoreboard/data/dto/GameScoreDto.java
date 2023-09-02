@@ -5,11 +5,11 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-public class MatchScoreDto {
+public class GameScoreDto {
     private final UUID id;
     private final WinnerType winner;
 
-    public MatchScoreDto(UUID id, WinnerType winner) {
+    public GameScoreDto(UUID id, WinnerType winner) {
         this.id = id;
         this.winner = winner;
     }
