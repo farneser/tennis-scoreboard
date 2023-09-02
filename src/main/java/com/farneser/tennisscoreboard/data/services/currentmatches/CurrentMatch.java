@@ -4,7 +4,6 @@ import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.services.score.GamePoints;
 import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +28,14 @@ public class CurrentMatch {
         this.gameScore = new PlayersScore<>();
         this.setsCount = setsCount;
 
-        this.gameScore.setFirstPlayer(GamePoints.Zero);
-        this.gameScore.setSecondPlayer(GamePoints.Zero);
+        this.gameScore.setFirstPlayerScore(GamePoints.Zero);
+        this.gameScore.setSecondPlayerScore(GamePoints.Zero);
+    }
+
+    /**
+     * @return the count of sets that player needs to win all game
+     */
+    public int winMatchesCount() {
+        return (setsCount + 1) / 2;
     }
 }
