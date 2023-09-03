@@ -7,9 +7,15 @@ import com.farneser.tennisscoreboard.data.services.score.State;
 public class SetCalculator implements ICalculator {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
-        System.out.println(winner + " in set service");
+        match.getCurrentSet().setWinner(match.getCurrentSet().getWinner(winner) + 1, winner);
 
+        if (match.getCurrentSet().getWinner(winner) > 5) {
+            if (match.getCurrentSet().getWinner(winner) - match.getCurrentSet().getLooser(winner) >= 2 || match.getCurrentSet().getWinner(winner) == 7) {
+                match.refreshCurrentSet();
+                return WinnerType.convertToState(winner);
+            }
+        }
 
-        return null;
+        return State.GameInProcess;
     }
 }
