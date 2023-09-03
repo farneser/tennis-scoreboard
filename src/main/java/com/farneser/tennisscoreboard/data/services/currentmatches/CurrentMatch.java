@@ -16,7 +16,7 @@ public class CurrentMatch {
     private final Player firstPlayer;
     private final Player secondPlayer;
     private Player winnerPlayer;
-
+    private PlayersScore<Integer> currentSet = new PlayersScore<>();
     private final int setsCount;
     private List<PlayersScore<Integer>> setScores;
     private PlayersScore<GamePoints> gameScore;
