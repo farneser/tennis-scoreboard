@@ -35,9 +35,4 @@ public class CurrentMatchesService {
     public CurrentMatch get(UUID id) {
         return matches.get(id);
     }
-
-    public void remove(UUID id) {
-        matches.remove(id);
-    }
-
 }
