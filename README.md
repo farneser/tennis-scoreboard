@@ -1,5 +1,7 @@
 # Четвёртое задание курса [java-backend-learning-course](https://zhukovsd.github.io/java-backend-learning-course/)
 
+[![Java CI with Maven](https://github.com/farneser/tennis-scoreboard/actions/workflows/maven.yml/badge.svg)](https://github.com/farneser/tennis-scoreboard/actions/workflows/maven.yml)
+
 ## [Задание](https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/)
 
 Веб-приложение, реализующее табло счёта теннисного матча.
