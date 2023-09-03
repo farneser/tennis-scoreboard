@@ -5,6 +5,7 @@ import com.farneser.tennisscoreboard.data.services.score.GamePoints;
 import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,18 +19,20 @@ public class CurrentMatch {
     private Player winnerPlayer;
     private PlayersScore<Integer> currentSet = new PlayersScore<>();
     private final int setsCount;
-    private List<PlayersScore<Integer>> setScores;
-    private PlayersScore<GamePoints> gameScore;
+    private List<PlayersScore<Integer>> setScores = new ArrayList<>();
+    private PlayersScore<GamePoints> gameScore = new PlayersScore<>();
 
     public CurrentMatch(UUID id, Player firstPlayer, Player secondPlayer, int setsCount) {
         this.id = id;
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
-        this.gameScore = new PlayersScore<>();
         this.setsCount = setsCount;
 
         this.gameScore.setFirstPlayerScore(GamePoints.Zero);
         this.gameScore.setSecondPlayerScore(GamePoints.Zero);
+
+        this.currentSet.setFirstPlayerScore(0);
+        this.currentSet.setSecondPlayerScore(0);
     }
 
     /**
@@ -37,5 +40,14 @@ public class CurrentMatch {
      */
     public int winMatchesCount() {
         return (setsCount + 1) / 2;
+    }
+
+    public void refreshCurrentSet() {
+        setScores.add(currentSet);
+
+        currentSet = new PlayersScore<>();
+
+        currentSet.setFirstPlayerScore(0);
+        currentSet.setSecondPlayerScore(0);
     }
 }
