@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CurrentMatchesService {
-    private final Map<UUID, CurrentMatch> matches = new HashMap<>();
     private static CurrentMatchesService instance;
+    private final Map<UUID, CurrentMatch> matches = new HashMap<>();
 
     private CurrentMatchesService() {
     }
