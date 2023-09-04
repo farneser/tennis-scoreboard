@@ -35,7 +35,9 @@ public class MatchScoreServlet extends HttpServlet {
 
         var currentMatch = currentMatchesService.get(gameScore.getId());
 
-        new ScoreService().process(currentMatch, gameScore.getWinner());
+        if (currentMatch.getWinnerPlayer() == null) {
+            new ScoreService().process(currentMatch, gameScore.getWinner());
+        }
 
         resp.sendRedirect("match-score?uuid=" + gameScore.getId());
     }
