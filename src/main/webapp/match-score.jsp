@@ -12,10 +12,19 @@
 
 <body>
 <table>
+
+    <tr>
+        <%
+            out.println("<td>" + (currentMatch.isCurrentFirst ? "ball" : "") + "</td> ");
+            out.println("<td>" + (currentMatch.isCurrentFirst ? "" : "ball") + "</td> ");
+        %>
+    </tr>
+
     <tr>
         <th>first</th>
         <th>second</th>
     </tr>
+
     <% for (var set : currentMatch.getSetScores()) {
 
         out.println("<tr>");
