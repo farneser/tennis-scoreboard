@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Data
@@ -21,12 +22,17 @@ public class CurrentMatch {
     private PlayersScore<Integer> currentSet = new PlayersScore<>();
     private List<PlayersScore<Integer>> setScores = new ArrayList<>();
     private PlayersScore<GamePoints> gameScore = new PlayersScore<>();
+    public boolean isCurrentFirst;
 
     public CurrentMatch(UUID id, Player firstPlayer, Player secondPlayer, int setsCount) {
         this.id = id;
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
         this.setsCount = setsCount;
+
+        var rnd = new Random();
+
+        isCurrentFirst = rnd.nextBoolean();
 
         this.gameScore.setFirstPlayerScore(GamePoints.Zero);
         this.gameScore.setSecondPlayerScore(GamePoints.Zero);

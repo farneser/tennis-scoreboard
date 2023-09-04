@@ -16,6 +16,8 @@ public class ScoreService implements ICalculator {
         var setCalculator = new SetCalculator();
         var matchCalculator = new MatchCalculator();
 
+        match.isCurrentFirst = !match.isCurrentFirst;
+
         var gameResult = gameCalculator.process(match, winner);
         System.out.println("game " + match.getId() + " " + gameResult);
 
