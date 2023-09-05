@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Players", indexes = {@Index(name = "nameIndex", columnList = "Name")})
+@Table(name = "Player", indexes = {@Index(name = "nameIndex", columnList = "Name")}, uniqueConstraints = {
+        @UniqueConstraint(columnNames = "id")})
 @Data
 @NoArgsConstructor
 public class Player {
