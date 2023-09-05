@@ -9,23 +9,23 @@
 <form action="new-match" method="post">
 
     <label>
-        Имя игрока 1
+        First player name
         <input name="player1" required>
     </label>
     <br>
     <label>
-        Имя игрока 2
+        Second player name
         <input name="player2" required>
     </label>
     <br>
     <label>
-        Количество сетов
+        Count of sets
         <select required name="setsCount">
             <option>3</option>
             <option>5</option>
         </select>
     </label>
-    <input type="submit" value="Начать">
+    <input type="submit" value="Start">
 
 </form>
 
