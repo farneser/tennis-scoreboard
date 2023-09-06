@@ -1,4 +1,4 @@
-package com.farneser.tennisscoreboard.data.dto;
+package com.farneser.tennisscoreboard.data.entities.dto;
 
 import com.farneser.tennisscoreboard.data.services.score.State;
 

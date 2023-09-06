@@ -1,8 +1,8 @@
 package com.farneser.tennisscoreboard.data.utils;
 
-import com.farneser.tennisscoreboard.data.dto.CreateMatchDto;
-import com.farneser.tennisscoreboard.data.dto.GameScoreDto;
-import com.farneser.tennisscoreboard.data.dto.WinnerType;
+import com.farneser.tennisscoreboard.data.entities.dto.CreateMatchDto;
+import com.farneser.tennisscoreboard.data.entities.dto.GameScoreDto;
+import com.farneser.tennisscoreboard.data.entities.dto.WinnerType;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.UUID;

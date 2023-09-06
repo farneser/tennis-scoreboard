@@ -1,6 +1,6 @@
 package com.farneser.tennisscoreboard.data.services.score;
 
-import com.farneser.tennisscoreboard.data.dto.WinnerType;
+import com.farneser.tennisscoreboard.data.entities.dto.WinnerType;
 import lombok.Data;
 
 @Data
