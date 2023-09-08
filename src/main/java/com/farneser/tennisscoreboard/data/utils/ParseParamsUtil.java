@@ -2,6 +2,7 @@ package com.farneser.tennisscoreboard.data.utils;
 
 import com.farneser.tennisscoreboard.data.entities.dto.CreateMatchDto;
 import com.farneser.tennisscoreboard.data.entities.dto.GameScoreDto;
+import com.farneser.tennisscoreboard.data.entities.dto.MatchesDto;
 import com.farneser.tennisscoreboard.data.entities.dto.WinnerType;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -42,6 +43,15 @@ public class ParseParamsUtil {
         }
 
         return new GameScoreDto(id, winner);
+    }
+
+    public static MatchesDto ParseGetMatches(HttpServletRequest req) {
+
+        var page = req.getParameter("page");
+
+        var filter = req.getParameter("filter_by_player_name");
+
+        return new MatchesDto(Integer.parseInt(page), filter);
     }
 
 }

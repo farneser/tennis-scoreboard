@@ -28,8 +28,8 @@ public class NewMatchServlet extends HttpServlet {
 
         var createMatchDto = ParseParamsUtil.ParsePostNewMatch(req);
 
-        var firstPlayer = new Player(createMatchDto.getFirstPlayerName());
-        var secondPlayer = new Player(createMatchDto.getSecondPlayerName());
+        var firstPlayer = new Player(createMatchDto.firstPlayerName());
+        var secondPlayer = new Player(createMatchDto.secondPlayerName());
 
         try {
             firstPlayer = playerService.getByName(firstPlayer.getName());
@@ -44,7 +44,7 @@ public class NewMatchServlet extends HttpServlet {
         var id = currentMatchesService.create(
                 firstPlayer,
                 secondPlayer,
-                createMatchDto.getSetsCount()
+                createMatchDto.setsCount()
         );
 
         resp.sendRedirect("match-score?uuid=" + id);

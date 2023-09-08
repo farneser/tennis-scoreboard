@@ -35,10 +35,10 @@ public class MatchScoreServlet extends HttpServlet {
 
         var gameScore = ParseParamsUtil.ParsePostMatchScope(req);
 
-        var currentMatch = currentMatchesService.get(gameScore.getId());
+        var currentMatch = currentMatchesService.get(gameScore.id());
 
         if (currentMatch.getWinnerPlayer() == null) {
-            var state = new ScoreService().process(currentMatch, gameScore.getWinner());
+            var state = new ScoreService().process(currentMatch, gameScore.winner());
 
             if (state != State.GameInProcess) {
                 new FinishedMatchService().save(currentMatch);
@@ -46,6 +46,6 @@ public class MatchScoreServlet extends HttpServlet {
 
         }
 
-        resp.sendRedirect("match-score?uuid=" + gameScore.getId());
+        resp.sendRedirect("match-score?uuid=" + gameScore.id());
     }
 }
