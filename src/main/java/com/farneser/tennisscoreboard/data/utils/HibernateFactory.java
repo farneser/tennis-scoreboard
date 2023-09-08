@@ -1,10 +1,12 @@
 package com.farneser.tennisscoreboard.data.utils;
 
+import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 
 public class HibernateFactory {
@@ -15,19 +17,31 @@ public class HibernateFactory {
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                registry = new StandardServiceRegistryBuilder().configure().build();
+                var configuration = new Configuration()
+                        .configure("hibernate.cfg.xml");
 
+                registry = new StandardServiceRegistryBuilder()
+                        .applySettings(configuration.getProperties())
+                        .configure()
+                        .build();
                 var sources = new MetadataSources(registry)
-                        .addAnnotatedClass(Player.class);
+                        .addAnnotatedClass(Player.class)
+                        .addAnnotatedClass(Match.class);
 
-                var metadata = sources.getMetadataBuilder().build();
 
-                sessionFactory = metadata.getSessionFactoryBuilder().build();
+                var metadata = sources
+                        .getMetadataBuilder()
+                        .build();
+
+                sessionFactory = metadata
+                        .getSessionFactoryBuilder()
+                        .build();
 
             } catch (Exception e) {
-                if (registry != null) {
-                    StandardServiceRegistryBuilder.destroy(registry);
-                }
+
+                shutdown();
+
+                e.printStackTrace();
             }
         }
 
