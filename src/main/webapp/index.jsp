@@ -9,7 +9,7 @@
 <div>
     <a href="new-match">Create a new match</a>
     <br>
-    <a href="#">Completed matches</a>
+    <a href="matches">Completed matches</a>
 </div>
 
 </body>
