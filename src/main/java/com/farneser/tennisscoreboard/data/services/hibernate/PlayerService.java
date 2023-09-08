@@ -19,6 +19,8 @@ public class PlayerService extends EntityService<Player> {
 
     @Override
     public List<Player> get() {
-        return get(Player.class);
+        var session = HibernateFactory.getSessionFactory().openSession();
+
+        return session.createQuery("FROM Player", Player.class).getResultList();
     }
 }
