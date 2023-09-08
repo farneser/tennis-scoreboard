@@ -16,14 +16,12 @@ import java.io.IOException;
 @WebServlet(name = "new-match", value = "/new-match")
 public class NewMatchServlet extends HttpServlet {
     private final CurrentMatchesService currentMatchesService = CurrentMatchesService.getInstance();
+    private final PlayerService playerService = new PlayerService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
     }
-
-
-    private final PlayerService playerService = new PlayerService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
