@@ -1,5 +1,6 @@
 package com.farneser.tennisscoreboard.data.services.currentmatches;
 
+import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.services.score.GamePoints;
 import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
@@ -55,5 +56,9 @@ public class CurrentMatch {
 
         currentSet.setFirstPlayerScore(0);
         currentSet.setSecondPlayerScore(0);
+    }
+
+    public Match getFinishedMatch() {
+        return new Match(firstPlayer, secondPlayer, winnerPlayer);
     }
 }

@@ -22,6 +22,7 @@ public abstract class EntityService<T> {
         playerService.persist(second);
 
         matchService.persist(new Match(first, second, first));
+        playerService.persist(first);
 
         playerService.get().forEach(System.out::println);
 

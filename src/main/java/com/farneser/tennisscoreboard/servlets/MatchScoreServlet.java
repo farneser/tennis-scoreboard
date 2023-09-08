@@ -1,7 +1,9 @@
 package com.farneser.tennisscoreboard.servlets;
 
+import com.farneser.tennisscoreboard.data.services.FinishedMatchService;
 import com.farneser.tennisscoreboard.data.services.ScoreService;
 import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatchesService;
+import com.farneser.tennisscoreboard.data.services.score.State;
 import com.farneser.tennisscoreboard.data.utils.ParseParamsUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,7 +38,12 @@ public class MatchScoreServlet extends HttpServlet {
         var currentMatch = currentMatchesService.get(gameScore.getId());
 
         if (currentMatch.getWinnerPlayer() == null) {
-            new ScoreService().process(currentMatch, gameScore.getWinner());
+            var state = new ScoreService().process(currentMatch, gameScore.getWinner());
+
+            if (state != State.GameInProcess) {
+                new FinishedMatchService().save(currentMatch);
+            }
+
         }
 
         resp.sendRedirect("match-score?uuid=" + gameScore.getId());

@@ -36,5 +36,4 @@ public class ScoreService implements ICalculator {
 
         return State.GameInProcess;
     }
-
 }
