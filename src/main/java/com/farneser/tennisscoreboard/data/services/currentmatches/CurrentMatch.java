@@ -18,11 +18,11 @@ public class CurrentMatch {
     private final Player firstPlayer;
     private final Player secondPlayer;
     private final int setsCount;
+    public boolean isCurrentFirst;
     private Player winnerPlayer;
     private PlayersScore<Integer> currentSet = new PlayersScore<>();
     private List<PlayersScore<Integer>> setScores = new ArrayList<>();
     private PlayersScore<GamePoints> gameScore = new PlayersScore<>();
-    public boolean isCurrentFirst;
 
     public CurrentMatch(UUID id, Player firstPlayer, Player secondPlayer, int setsCount) {
         this.id = id;

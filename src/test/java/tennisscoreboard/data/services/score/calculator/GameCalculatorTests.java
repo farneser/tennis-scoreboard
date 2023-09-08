@@ -1,7 +1,7 @@
 package tennisscoreboard.data.services.score.calculator;
 
-import com.farneser.tennisscoreboard.data.entities.dto.WinnerType;
 import com.farneser.tennisscoreboard.data.entities.Player;
+import com.farneser.tennisscoreboard.data.entities.dto.WinnerType;
 import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatch;
 import com.farneser.tennisscoreboard.data.services.score.State;
 import com.farneser.tennisscoreboard.data.services.score.calculator.GameCalculator;

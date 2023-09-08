@@ -8,6 +8,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import java.util.Arrays;
+
 
 public class HibernateFactory {
 
@@ -41,7 +43,7 @@ public class HibernateFactory {
 
                 shutdown();
 
-                e.printStackTrace();
+                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         }
 
