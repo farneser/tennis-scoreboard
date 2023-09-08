@@ -1,6 +1,7 @@
 package com.farneser.tennisscoreboard.data.services.hibernate;
 
 import com.farneser.tennisscoreboard.data.entities.Player;
+import com.farneser.tennisscoreboard.data.exceptons.NotFoundException;
 import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
 
 import java.util.List;
@@ -22,5 +23,20 @@ public class PlayerService extends EntityService<Player> {
         var session = HibernateFactory.getSessionFactory().openSession();
 
         return session.createQuery("FROM Player", Player.class).getResultList();
+    }
+
+    public Player getByName(String name) throws NotFoundException {
+
+        var session = HibernateFactory.getSessionFactory().openSession();
+        try {
+            return session
+                    .createQuery("FROM Player WHERE lower(name) = :name", Player.class)
+                    .setParameter("name", name.toLowerCase())
+                    .getResultList()
+                    .get(0);
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new NotFoundException();
+        }
     }
 }
