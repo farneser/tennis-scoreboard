@@ -9,6 +9,69 @@ import java.util.List;
 import java.util.Random;
 
 public class MatchService extends EntityService<Match> {
+
+    public Long getCount() {
+        var session = HibernateFactory.getSessionFactory().openSession();
+
+        var countQuery = session.createSelectionQuery("Select count(m.id) FROM Match m");
+
+        var res = countQuery.uniqueResult();
+
+        return (Long) res;
+    }
+
+    public int getLastPage(int pageSize) {
+        var matchesCount = getCount();
+        return getLastPage(pageSize, matchesCount);
+    }
+
+    public int getLastPage(int pageSize, Long matchesCount) {
+        return (int) (Math.ceil((double) matchesCount / pageSize));
+    }
+
+    public List<Match> get(int page, int pageSize, String filterName) {
+        int lastPageNumber = getLastPage(pageSize);
+
+        var session = HibernateFactory.getSessionFactory().openSession();
+
+        var query = session.createQuery(
+                """
+                        SELECT m
+                        FROM Match m
+                        LEFT JOIN FETCH m.player1 p1
+                        LEFT JOIN FETCH m.player2 p2
+                        LEFT JOIN FETCH m.winner w
+                        WHERE (:playerName IS NULL) OR
+                            (p1.name LIKE :playerName) OR
+                            (p2.name LIKE :playerName) OR
+                            (w.name LIKE :playerName)
+                        """
+                , Match.class);
+
+        query.setParameter("playerName", filterName);
+
+        query.setFirstResult((lastPageNumber - page) * pageSize);
+        query.setMaxResults(pageSize);
+
+        return query.getResultList();
+    }
+
+    public static void main(String[] args) {
+        var matchService = new MatchService();
+
+        var lastPage = matchService.getLastPage(15);
+        System.out.println(lastPage);
+        var count = matchService.getCount();
+        System.out.println(count);
+        var res = matchService.get(3, 12, null);
+
+        System.out.println(res);
+
+        res = matchService.get(3, 12, "Vlad");
+
+        System.out.println(res);
+    }
+
     @Override
     public List<Match> get() {
         var session = HibernateFactory.getSessionFactory().openSession();
