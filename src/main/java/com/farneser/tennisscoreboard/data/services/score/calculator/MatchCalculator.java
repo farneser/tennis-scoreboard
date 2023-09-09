@@ -8,6 +8,10 @@ public class MatchCalculator implements ICalculator {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
 
+        if (match.getWinnerPlayer() != null) {
+            return match.getWinnerPlayer() == match.getFirstPlayer() ? State.FirstPlayer : State.SecondPlayer;
+        }
+
         System.out.println(winner + " wins the set");
 
         var setsWonCounter = 0;
@@ -20,13 +24,9 @@ public class MatchCalculator implements ICalculator {
 
         }
 
-        if (match.getSetScores().size() >= match.winMatchesCount() &&
-                setsWonCounter >= match.winMatchesCount()) {
+        if (match.getSetScores().size() >= match.winMatchesCount() && setsWonCounter >= match.winMatchesCount()) {
 
-            match.setWinnerPlayer(winner == WinnerType.FirstPlayer ?
-                    match.getFirstPlayer() :
-                    match.getSecondPlayer()
-            );
+            match.setWinnerPlayer(winner == WinnerType.FirstPlayer ? match.getFirstPlayer() : match.getSecondPlayer());
 
             return WinnerType.convertToState(winner);
         }
