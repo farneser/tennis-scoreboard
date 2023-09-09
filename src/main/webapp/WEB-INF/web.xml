@@ -6,5 +6,10 @@
     <error-page>
         <error-code>404</error-code>
         <location>/error-404.jsp</location>
-    </error-page>error-404.jsp
+    </error-page>
+
+    <listener>
+        <listener-class>com.farneser.tennisscoreboard.listeners.ApplicationContextListener</listener-class>
+    </listener>
+
 </web-app>
