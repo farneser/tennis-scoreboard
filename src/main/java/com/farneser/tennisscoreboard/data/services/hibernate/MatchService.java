@@ -30,8 +30,6 @@ public class MatchService extends EntityService<Match> {
     }
 
     public List<Match> get(int page, int pageSize, String filterName) {
-        int lastPageNumber = getLastPage(pageSize);
-
         var session = HibernateFactory.getSessionFactory().openSession();
 
         var query = session.createQuery(
@@ -42,15 +40,17 @@ public class MatchService extends EntityService<Match> {
                         LEFT JOIN FETCH m.player2 p2
                         LEFT JOIN FETCH m.winner w
                         WHERE (:playerName IS NULL) OR
-                            (p1.name LIKE :playerName) OR
-                            (p2.name LIKE :playerName) OR
-                            (w.name LIKE :playerName)
+                            (LOWER(p1.name) LIKE LOWER(:playerName)) OR
+                            (LOWER(p2.name) LIKE LOWER(:playerName)) OR
+                            (LOWER(w.name) LIKE LOWER(:playerName))
                         """
                 , Match.class);
 
         query.setParameter("playerName", filterName);
 
-        query.setFirstResult((lastPageNumber - page) * pageSize);
+        int firstResult = (page - 1) * pageSize;
+        query.setFirstResult(firstResult);
+
         query.setMaxResults(pageSize);
 
         return query.getResultList();
@@ -67,7 +67,7 @@ public class MatchService extends EntityService<Match> {
 
         System.out.println(res);
 
-        res = matchService.get(3, 12, "Vlad");
+        res = matchService.get(0, 10, "Vlad");
 
         System.out.println(res);
     }
