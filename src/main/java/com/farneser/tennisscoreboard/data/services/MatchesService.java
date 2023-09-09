@@ -14,6 +14,7 @@ public class MatchesService {
 
     public MatchListViewModel persist(MatchesDto matchesDto) {
         var pageSize = 10;
+
         List<Match> matches = new ArrayList<>();
 
         if (matchesDto.pageNumber() <= matchService.getLastPage(pageSize) && matchesDto.pageNumber() > 0) {

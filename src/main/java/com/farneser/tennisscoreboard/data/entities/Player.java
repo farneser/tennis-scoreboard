@@ -19,7 +19,6 @@ public class Player {
         this.name = name;
     }
 
-    // Переопределение equals и hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -41,7 +41,7 @@ public class SetCalculatorTests extends TestCase {
         assert setCalculator.process(currentMatch, WinnerType.SecondPlayer) == State.SecondPlayer;
     }
 
-    public void testAdvancedGame(){
+    public void testAdvancedGame() {
         var currentMatch = new CurrentMatch(UUID.randomUUID(), new Player(), new Player(), 5);
 
 

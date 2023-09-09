@@ -12,10 +12,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "match-score", value = "/match-score")
 public class MatchScoreServlet extends HttpServlet {
     private final CurrentMatchesService currentMatchesService = CurrentMatchesService.getInstance();
+    private final Logger logger = Logger.getLogger(MatchScoreServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,9 +40,13 @@ public class MatchScoreServlet extends HttpServlet {
         var currentMatch = currentMatchesService.get(gameScore.id());
 
         if (currentMatch.getWinnerPlayer() == null) {
+
+            logger.info("match " + currentMatch.getId() + " in progress");
+
             var state = new ScoreService().process(currentMatch, gameScore.winner());
 
             if (state != State.GameInProcess) {
+                logger.info("match " + currentMatch.getId() + " finished with winner=" + currentMatch.getWinnerPlayer());
                 new FinishedMatchService().save(currentMatch);
             }
 

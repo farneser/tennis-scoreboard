@@ -7,6 +7,7 @@ import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class MatchService extends EntityService<Match> {
 
@@ -46,6 +47,8 @@ public class MatchService extends EntityService<Match> {
 
     }
 
+    private final Logger logger = Logger.getLogger(MatchService.class.getName());
+
     public static void main(String[] args) {
         var matchService = new MatchService();
 
@@ -65,9 +68,17 @@ public class MatchService extends EntityService<Match> {
     public Long getCount() {
         var session = HibernateFactory.getSessionFactory().openSession();
 
+        var message = "creating query \"Select count(m.id) FROM Match m\"";
+
+        logger.info("started " + message);
+
         var countQuery = session.createSelectionQuery("Select count(m.id) FROM Match m");
 
+        logger.info("successfully created " + message);
+
         var res = countQuery.uniqueResult();
+
+        logger.info("successfully finished " + message + " with result = " + res);
 
         return (Long) res;
     }
@@ -84,6 +95,10 @@ public class MatchService extends EntityService<Match> {
     public List<Match> get(int page, int pageSize, String filterName) {
         var session = HibernateFactory.getSessionFactory().openSession();
 
+        var message = "creating query of selection finished matches with pagination page=" + page;
+
+        logger.info("started " + message);
+
         var query = session.createQuery(
                 """
                         SELECT m
@@ -98,12 +113,15 @@ public class MatchService extends EntityService<Match> {
                         """
                 , Match.class);
 
+        logger.info("successfully created " + message);
+
         query.setParameter("playerName", filterName);
 
-        int firstResult = (page - 1) * pageSize;
-        query.setFirstResult(firstResult);
+        query.setFirstResult((page - 1) * pageSize);
 
         query.setMaxResults(pageSize);
+
+        logger.info("successfully finished " + message);
 
         return query.getResultList();
     }

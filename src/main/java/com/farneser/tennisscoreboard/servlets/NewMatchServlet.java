@@ -12,11 +12,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @WebServlet(name = "new-match", value = "/new-match")
 public class NewMatchServlet extends HttpServlet {
     private final CurrentMatchesService currentMatchesService = CurrentMatchesService.getInstance();
     private final PlayerService playerService = new PlayerService();
+    private final Logger logger = Logger.getLogger(NewMatchServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,13 +34,17 @@ public class NewMatchServlet extends HttpServlet {
         var secondPlayer = new Player(createMatchDto.secondPlayerName());
 
         try {
+            logger.info("start searching for the first player");
             firstPlayer = playerService.getByName(firstPlayer.getName());
         } catch (NotFoundException ignored) {
+            logger.info("first player not found");
         }
 
         try {
+            logger.info("start searching for the second player");
             secondPlayer = playerService.getByName(secondPlayer.getName());
         } catch (NotFoundException ignored) {
+            logger.info("second player not found");
         }
 
         var id = currentMatchesService.create(

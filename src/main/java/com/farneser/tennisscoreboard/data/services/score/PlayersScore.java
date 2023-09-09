@@ -29,8 +29,4 @@ public class PlayersScore<T> {
     public T getLooser(WinnerType winner) {
         return getWinner(winner == WinnerType.FirstPlayer ? WinnerType.SecondPlayer : WinnerType.FirstPlayer);
     }
-
-    public void setLooser(T playerScore, WinnerType winner) {
-        setWinner(playerScore, winner == WinnerType.FirstPlayer ? WinnerType.SecondPlayer : WinnerType.FirstPlayer);
-    }
 }

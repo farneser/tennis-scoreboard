@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Data
 public class CurrentMatch {
@@ -19,6 +20,7 @@ public class CurrentMatch {
     private final Player firstPlayer;
     private final Player secondPlayer;
     private final int setsCount;
+    private final Logger logger = Logger.getLogger(CurrentMatch.class.getName());
     public boolean isCurrentFirst;
     private Player winnerPlayer;
     private PlayersScore<Integer> currentSet = new PlayersScore<>();
@@ -50,7 +52,10 @@ public class CurrentMatch {
     }
 
     public void refreshCurrentSet() {
+        logger.info("start append " + currentSet + " to set scores");
         setScores.add(currentSet);
+
+        logger.info("append " + currentSet + " successfully finished");
 
         currentSet = new PlayersScore<>();
 

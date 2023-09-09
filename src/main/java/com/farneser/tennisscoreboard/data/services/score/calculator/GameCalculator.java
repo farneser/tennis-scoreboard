@@ -5,7 +5,11 @@ import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatch;
 import com.farneser.tennisscoreboard.data.services.score.GamePoints;
 import com.farneser.tennisscoreboard.data.services.score.State;
 
+import java.util.logging.Logger;
+
 public class GameCalculator implements ICalculator {
+    private final Logger logger = Logger.getLogger(GameCalculator.class.getName());
+
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
         var gameScore = match.getGameScore();
@@ -24,6 +28,8 @@ public class GameCalculator implements ICalculator {
             }
 
         }
+
+        logger.info("game " + match.getId() + " continues with score " + match.getGameScore());
 
         if (gameScore.getWinner(winner) != GamePoints.Advantage) {
             gameScore.setWinner(gameScore.getWinner(winner).next(), winner);

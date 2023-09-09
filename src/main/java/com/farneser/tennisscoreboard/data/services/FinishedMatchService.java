@@ -6,17 +6,19 @@ import com.farneser.tennisscoreboard.data.services.hibernate.EntityService;
 import com.farneser.tennisscoreboard.data.services.hibernate.MatchService;
 import com.farneser.tennisscoreboard.data.services.hibernate.PlayerService;
 
+import java.util.logging.Logger;
+
 public class FinishedMatchService {
+    private final Logger logger = Logger.getLogger(FinishedMatchService.class.getName());
+
     private final PlayerService playerService = new PlayerService();
     private final EntityService<Match> matchService = new MatchService();
 
     public void save(CurrentMatch match) {
-
         savePlayers(match);
-        System.out.println("created player1 " + match.getFirstPlayer() + " and player2 " + match.getSecondPlayer() + " created");
 
         var finishedMatch = saveMatch(match);
-        System.out.println("created match " + finishedMatch + " created");
+        logger.info("created match " + finishedMatch + " created");
     }
 
     private void savePlayers(CurrentMatch match) {

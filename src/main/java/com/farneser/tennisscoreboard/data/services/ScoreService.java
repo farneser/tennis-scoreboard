@@ -8,7 +8,10 @@ import com.farneser.tennisscoreboard.data.services.score.calculator.ICalculator;
 import com.farneser.tennisscoreboard.data.services.score.calculator.MatchCalculator;
 import com.farneser.tennisscoreboard.data.services.score.calculator.SetCalculator;
 
+import java.util.logging.Logger;
+
 public class ScoreService implements ICalculator {
+    private final Logger logger = Logger.getLogger(ScoreService.class.getName());
 
     public State process(CurrentMatch match, WinnerType winner) {
 
@@ -19,16 +22,16 @@ public class ScoreService implements ICalculator {
         match.isCurrentFirst = !match.isCurrentFirst;
 
         var gameResult = gameCalculator.process(match, winner);
-        System.out.println("game " + match.getId() + " " + gameResult);
+        logger.info("game " + match.getId() + " " + gameResult);
 
         if (gameResult != State.GameInProcess) {
 
             var setResult = setCalculator.process(match, winner);
-            System.out.println("set " + match.getId() + " " + setResult);
+            logger.info("set " + match.getId() + " " + setResult);
 
             if (setResult != State.GameInProcess) {
                 var matchResult = matchCalculator.process(match, winner);
-                System.out.println("match " + match.getId() + " " + matchResult);
+                logger.info("match " + match.getId() + " " + matchResult);
 
                 return matchResult;
             }

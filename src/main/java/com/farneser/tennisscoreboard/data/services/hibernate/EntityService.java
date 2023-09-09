@@ -3,12 +3,16 @@ package com.farneser.tennisscoreboard.data.services.hibernate;
 import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
+import org.hibernate.Transaction;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public abstract class EntityService<T> {
+
+    private final Logger logger = Logger.getLogger(EntityService.class.getName());
 
     public static void main(String[] args) {
         var matchService = new MatchService();
@@ -31,12 +35,23 @@ public abstract class EntityService<T> {
     }
 
     public void persist(T object) {
+
+        var message = "create " + object;
+
+        logger.info("starting " + message);
+        Transaction transaction = null;
         try (var session = HibernateFactory.getSessionFactory().openSession()) {
-            var transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.persist(object);
             transaction.commit();
         } catch (Exception e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            if (transaction != null) {
+                logger.info("rollback transaction of " + message);
+                transaction.rollback();
+            }
+
+            logger.warning("failed " + message);
+            logger.warning(Arrays.toString(e.getStackTrace()));
         }
     }
 
