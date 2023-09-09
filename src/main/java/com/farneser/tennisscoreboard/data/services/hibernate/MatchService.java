@@ -10,6 +10,58 @@ import java.util.Random;
 
 public class MatchService extends EntityService<Match> {
 
+    // demo data
+    static {
+        var playerService = new PlayerService();
+        var matchService = new MatchService();
+
+        var players = new ArrayList<Player>();
+
+        players.add(new Player("Andrey"));
+        players.add(new Player("Vlad"));
+        players.add(new Player("Sasha"));
+        players.add(new Player("Jack"));
+        players.add(new Player("Yurik"));
+        players.add(new Player("Maksim"));
+
+        players.forEach(playerService::persist);
+
+        var random = new Random();
+
+        for (var i = 0; i < 50; i++) {
+
+            var index1 = random.nextInt(players.size());
+            Player player1 = players.get(index1);
+
+            int index2;
+            Player player2;
+
+            do {
+                index2 = random.nextInt(players.size());
+                player2 = players.get(index2);
+            } while (index2 == index1);
+
+            matchService.persist(new Match(player1, player2, random.nextBoolean() ? player1 : player2));
+        }
+
+    }
+
+    public static void main(String[] args) {
+        var matchService = new MatchService();
+
+        var lastPage = matchService.getLastPage(15);
+        System.out.println(lastPage);
+        var count = matchService.getCount();
+        System.out.println(count);
+        var res = matchService.get(3, 12, null);
+
+        System.out.println(res);
+
+        res = matchService.get(0, 10, "Vlad");
+
+        System.out.println(res);
+    }
+
     public Long getCount() {
         var session = HibernateFactory.getSessionFactory().openSession();
 
@@ -56,62 +108,10 @@ public class MatchService extends EntityService<Match> {
         return query.getResultList();
     }
 
-    public static void main(String[] args) {
-        var matchService = new MatchService();
-
-        var lastPage = matchService.getLastPage(15);
-        System.out.println(lastPage);
-        var count = matchService.getCount();
-        System.out.println(count);
-        var res = matchService.get(3, 12, null);
-
-        System.out.println(res);
-
-        res = matchService.get(0, 10, "Vlad");
-
-        System.out.println(res);
-    }
-
     @Override
     public List<Match> get() {
         var session = HibernateFactory.getSessionFactory().openSession();
 
         return session.createQuery("FROM Match", Match.class).getResultList();
-    }
-
-    // demo data
-    static {
-        var playerService = new PlayerService();
-        var matchService = new MatchService();
-
-        var players = new ArrayList<Player>();
-
-        players.add(new Player("Andrey"));
-        players.add(new Player("Vlad"));
-        players.add(new Player("Sasha"));
-        players.add(new Player("Jack"));
-        players.add(new Player("Yurik"));
-        players.add(new Player("Maksim"));
-
-        players.forEach(playerService::persist);
-
-        var random = new Random();
-
-        for (var i = 0; i < 50; i++) {
-
-            var index1 = random.nextInt(players.size());
-            Player player1 = players.get(index1);
-
-            int index2;
-            Player player2;
-
-            do {
-                index2 = random.nextInt(players.size());
-                player2 = players.get(index2);
-            } while (index2 == index1);
-
-            matchService.persist(new Match(player1, player2, random.nextBoolean() ? player1 : player2));
-        }
-
     }
 }

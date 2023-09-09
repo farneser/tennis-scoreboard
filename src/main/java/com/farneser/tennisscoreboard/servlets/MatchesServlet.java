@@ -1,8 +1,6 @@
 package com.farneser.tennisscoreboard.servlets;
 
-import com.farneser.tennisscoreboard.data.entities.viewmodel.MatchListViewModel;
 import com.farneser.tennisscoreboard.data.services.MatchesService;
-import com.farneser.tennisscoreboard.data.services.hibernate.MatchService;
 import com.farneser.tennisscoreboard.data.utils.ParseParamsUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,7 +16,7 @@ public class MatchesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         var matchesDto = ParseParamsUtil.ParseGetMatches(req);
-        
+
         var servletContext = getServletContext();
 
         servletContext.setAttribute(
