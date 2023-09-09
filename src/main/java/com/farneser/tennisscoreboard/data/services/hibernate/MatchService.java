@@ -4,7 +4,9 @@ import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MatchService extends EntityService<Match> {
     @Override
@@ -19,26 +21,34 @@ public class MatchService extends EntityService<Match> {
         var playerService = new PlayerService();
         var matchService = new MatchService();
 
-        var player1 = new Player("Andrey");
-        var player2 = new Player("Vlad");
-        var player3 = new Player("Sasha");
-        var player4 = new Player("Jack");
-        var player5 = new Player("Yurik");
-        var player6 = new Player("Maksim");
+        var players = new ArrayList<Player>();
 
-        playerService.persist(player1);
-        playerService.persist(player2);
-        playerService.persist(player3);
-        playerService.persist(player4);
-        playerService.persist(player5);
-        playerService.persist(player6);
+        players.add(new Player("Andrey"));
+        players.add(new Player("Vlad"));
+        players.add(new Player("Sasha"));
+        players.add(new Player("Jack"));
+        players.add(new Player("Yurik"));
+        players.add(new Player("Maksim"));
 
-        matchService.persist(new Match(player1, player2, player1));
-        matchService.persist(new Match(player2, player1, player1));
-        matchService.persist(new Match(player3, player2, player2));
-        matchService.persist(new Match(player4, player6, player6));
-        matchService.persist(new Match(player1, player5, player5));
-        matchService.persist(new Match(player4, player2, player2));
-        matchService.persist(new Match(player1, player5, player1));
+        players.forEach(playerService::persist);
+
+        var random = new Random();
+
+        for (var i = 0; i < 50; i++) {
+
+            var index1 = random.nextInt(players.size());
+            Player player1 = players.get(index1);
+
+            int index2;
+            Player player2;
+
+            do {
+                index2 = random.nextInt(players.size());
+                player2 = players.get(index2);
+            } while (index2 == index1);
+
+            matchService.persist(new Match(player1, player2, random.nextBoolean() ? player1 : player2));
+        }
+
     }
 }
