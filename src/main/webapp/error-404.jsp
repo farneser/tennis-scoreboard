@@ -6,9 +6,7 @@
 </head>
 <body>
 
-<%
-    request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-%>
+<%request.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);%>
 
 </body>
 </html>
