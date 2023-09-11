@@ -3,7 +3,6 @@ package com.farneser.tennisscoreboard.data.services.hibernate;
 import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
-import org.hibernate.Transaction;
 
 import java.util.Arrays;
 import java.util.List;
