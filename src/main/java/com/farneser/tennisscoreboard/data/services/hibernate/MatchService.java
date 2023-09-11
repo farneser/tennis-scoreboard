@@ -16,14 +16,17 @@ public class MatchService extends EntityService<Match> {
         var playerService = new PlayerService();
         var matchService = new MatchService();
 
+        var playerNames = new String[]{
+                "Aleksandr", "Ekaterina", "Ivan", "Anna", "Dmitriy", "Olga", "Maksim",
+                "Natalya", "Sergey", "Tatyana", "Andrey", "Elena", "Vladimir", "Mariya",
+                "Pavel", "Yuliya", "Artem", "Larisa", "Anton", "Irina"
+        };
+
         var players = new ArrayList<Player>();
 
-        players.add(new Player("Andrey"));
-        players.add(new Player("Vlad"));
-        players.add(new Player("Sasha"));
-        players.add(new Player("Jack"));
-        players.add(new Player("Yurik"));
-        players.add(new Player("Maksim"));
+        for (var playerName : playerNames) {
+            players.add(new Player(playerName));
+        }
 
         players.forEach(playerService::persist);
 
@@ -90,17 +93,14 @@ public class MatchService extends EntityService<Match> {
 
         logger.info("started " + message);
 
-        var countQuery = session.createSelectionQuery(
-                """
-                        SELECT count(m.id)
-                        FROM Match m
-                        WHERE (:playerName IS NULL) OR
-                        (LOWER(m.player1.name) LIKE LOWER(:playerName)) OR
-                        (LOWER(m.player2.name) LIKE LOWER(:playerName)) OR
-                        (LOWER(m.winner.name) LIKE LOWER(:playerName))
-                        """,
-                Long.class
-        );
+        var countQuery = session.createSelectionQuery("""
+                SELECT count(m.id)
+                FROM Match m
+                WHERE (:playerName IS NULL) OR
+                (LOWER(m.player1.name) LIKE LOWER(:playerName)) OR
+                (LOWER(m.player2.name) LIKE LOWER(:playerName)) OR
+                (LOWER(m.winner.name) LIKE LOWER(:playerName))
+                """, Long.class);
 
         countQuery.setParameter("playerName", filterName);
 
@@ -110,7 +110,7 @@ public class MatchService extends EntityService<Match> {
 
         logger.info("successfully finished " + message + " with result = " + res);
 
-        return (Long) res;
+        return res;
     }
 
     public int getLastPage(int pageSize) {
@@ -129,19 +129,17 @@ public class MatchService extends EntityService<Match> {
 
         logger.info("started " + message);
 
-        var query = session.createQuery(
-                """
-                        SELECT m
-                        FROM Match m
-                        LEFT JOIN FETCH m.player1 p1
-                        LEFT JOIN FETCH m.player2 p2
-                        LEFT JOIN FETCH m.winner w
-                        WHERE (:playerName IS NULL) OR
-                            (LOWER(p1.name) LIKE LOWER(:playerName)) OR
-                            (LOWER(p2.name) LIKE LOWER(:playerName)) OR
-                            (LOWER(w.name) LIKE LOWER(:playerName))
-                        """
-                , Match.class);
+        var query = session.createQuery("""
+                SELECT m
+                FROM Match m
+                LEFT JOIN FETCH m.player1 p1
+                LEFT JOIN FETCH m.player2 p2
+                LEFT JOIN FETCH m.winner w
+                WHERE (:playerName IS NULL) OR
+                    (LOWER(p1.name) LIKE LOWER(:playerName)) OR
+                    (LOWER(p2.name) LIKE LOWER(:playerName)) OR
+                    (LOWER(w.name) LIKE LOWER(:playerName))
+                """, Match.class);
 
         logger.info("successfully created " + message);
 

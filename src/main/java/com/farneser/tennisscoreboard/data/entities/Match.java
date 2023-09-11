@@ -34,7 +34,6 @@ public class Match {
         this.winner = winner;
     }
 
-    // Переопределение equals и hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
