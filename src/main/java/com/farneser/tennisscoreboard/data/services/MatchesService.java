@@ -27,7 +27,7 @@ public class MatchesService {
         return new MatchListViewModel(
                 matches,
                 matchesDto.pageNumber(),
-                matchService.getLastPage(pageSize)
+                matchService.getLastPage(pageSize, matchService.getCount(matchesDto.searchText()))
         );
     }
 
