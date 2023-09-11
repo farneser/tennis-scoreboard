@@ -83,6 +83,36 @@ public class MatchService extends EntityService<Match> {
         return (Long) res;
     }
 
+    public Long getCount(String filterName) {
+        var session = HibernateFactory.getSessionFactory().openSession();
+
+        var message = "creating query \"Select count(m.id) FROM Match m\"";
+
+        logger.info("started " + message);
+
+        var countQuery = session.createSelectionQuery(
+                """
+                        SELECT count(m.id)
+                        FROM Match m
+                        WHERE (:playerName IS NULL) OR
+                        (LOWER(m.player1.name) LIKE LOWER(:playerName)) OR
+                        (LOWER(m.player2.name) LIKE LOWER(:playerName)) OR
+                        (LOWER(m.winner.name) LIKE LOWER(:playerName))
+                        """,
+                Long.class
+        );
+
+        countQuery.setParameter("playerName", filterName);
+
+        logger.info("successfully created " + message);
+
+        var res = countQuery.uniqueResult();
+
+        logger.info("successfully finished " + message + " with result = " + res);
+
+        return (Long) res;
+    }
+
     public int getLastPage(int pageSize) {
         var matchesCount = getCount();
         return getLastPage(pageSize, matchesCount);
