@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Create a new match</title>
+    <link rel="stylesheet" type="text/css" href="css/new-match.css">
 </head>
 <body>
 

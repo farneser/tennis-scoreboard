@@ -3,28 +3,50 @@
 <html>
 <head>
     <title>Finished matches</title>
+    <link rel="stylesheet" type="text/css" href="css/matches.css">
+
     <% var matches = (MatchListViewModel) request.getServletContext().getAttribute("matches");
-
         var numPagesToShow = 5;
-
         var startPage = Math.max(1, matches.currentPageNumber() - (numPagesToShow / 2));
         var endPage = Math.min(matches.lastPageNumber(), startPage + numPagesToShow - 1);
-
         if (endPage - startPage + 1 < numPagesToShow) {
             startPage = Math.max(1, endPage - numPagesToShow + 1);
         }
-
         var filter = request.getParameter("filter_by_player_name");
     %>
 </head>
+
 <body>
 
+<form action="#" method="GET">
+    <label>
+        Enter player name
+        <input type="text" name="filter_by_player_name" placeholder="Player name"
+               value="<%=filter == null ? "" : filter%>">
+    </label>
+    <input type="submit" value="Search">
+</form>
+
+
 <% if (!matches.matches().isEmpty()) { %>
+<table>
+    <caption>
+        Score
+    </caption>
+    <tr>
+        <th>Match Id</th>
+        <th>First player</th>
+        <th>Second player</th>
+    </tr>
+    <% for (var match : matches.matches()) {
+        out.println("<tr>");
+        out.println("<td>" + match.getId() + "</td>");
+        out.println("<td>" + match.getPlayer1().getName() + (match.getPlayer1() == match.getWinner() ? " &#x1F3C6;" : "") + "</td>");
+        out.println("<td>" + match.getPlayer2().getName() + (match.getPlayer2() == match.getWinner() ? " &#x1F3C6;" : "") + "</td>");
+        out.println("</tr>");
+    } %>
 
-<% for (var match : matches.matches()) {
-    out.println(match + "<br/>");
-} %>
-
+</table>
 
 <ul>
     <%!
