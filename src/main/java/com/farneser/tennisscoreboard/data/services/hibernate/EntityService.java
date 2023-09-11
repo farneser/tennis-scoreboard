@@ -39,17 +39,12 @@ public abstract class EntityService<T> {
         var message = "create " + object;
 
         logger.info("starting " + message);
-        Transaction transaction = null;
+
         try (var session = HibernateFactory.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+            var transaction = session.beginTransaction();
             session.persist(object);
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                logger.info("rollback transaction of " + message);
-                transaction.rollback();
-            }
-
             logger.warning("failed " + message);
             logger.warning(Arrays.toString(e.getStackTrace()));
         }
