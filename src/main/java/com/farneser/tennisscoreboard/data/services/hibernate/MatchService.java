@@ -29,7 +29,7 @@ public class MatchService extends EntityService<Match> {
 
         var random = new Random();
 
-        for (var i = 0; i < 50; i++) {
+        for (var i = 0; i < 150; i++) {
 
             var index1 = random.nextInt(players.size());
             Player player1 = players.get(index1);
