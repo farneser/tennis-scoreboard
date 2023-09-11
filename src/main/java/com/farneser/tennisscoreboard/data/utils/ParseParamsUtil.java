@@ -46,13 +46,18 @@ public class ParseParamsUtil {
     }
 
     public static MatchesDto ParseGetMatches(HttpServletRequest req) {
-        var page = 0;
+        var page = 1;
+
         try {
             page = Integer.parseInt(req.getParameter("page"));
         } catch (NumberFormatException ignored) {
         }
 
         var filter = req.getParameter("filter_by_player_name");
+
+        if (filter != null && filter.isEmpty()) {
+            filter = null;
+        }
 
         return new MatchesDto(page, filter);
     }
