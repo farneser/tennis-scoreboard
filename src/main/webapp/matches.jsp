@@ -4,6 +4,8 @@
 <head>
     <title>Finished matches</title>
     <link rel="stylesheet" type="text/css" href="css/matches.css">
+    <link rel="stylesheet" type="text/css" href="css/footer-styles.css">
+    <link rel="stylesheet" type="text/css" href="css/button-styles.css">
 
     <% var matches = (MatchListViewModel) request.getServletContext().getAttribute("matches");
         var numPagesToShow = 5;
@@ -103,5 +105,9 @@
 </div>
 
 <% } %>
+<footer>
+    <button onclick="goUpOneLevel()" class="btn btn-back">Go Back</button>
+</footer>
+<script src="scripts/goUpOneLevel.js"></script>
 </body>
 </html>

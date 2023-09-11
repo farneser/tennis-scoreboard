@@ -1,124 +1,87 @@
 <%@ page import="com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatch" %>
-<%--@elvariable id="currentMatch" type="com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatch"--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Match score</title>
-    <link rel="stylesheet" href="css/match-score.css">
+    <title>Match Score</title>
+    <link rel="stylesheet" type="text/css" href="css/match-score.css">
+    <link rel="stylesheet" type="text/css" href="css/footer-styles.css">
+    <link rel="stylesheet" type="text/css" href="css/button-styles.css">
     <% var currentMatch = (CurrentMatch) request.getServletContext().getAttribute("currentMatch"); %>
 </head>
 <body>
-<div class="container">
+<header>
+    <h1>Match Score</h1>
+</header>
+<div class="content">
     <% if (currentMatch != null) { %>
-
-
-    <div>
+    <div class="card">
         <table>
-            <% if (currentMatch.getWinnerPlayer() != null) { %>
-            <p class="text-styled">
-                Player
-                <% out.println(currentMatch.getWinnerPlayer().getName()); %>
-                won the game!
-            </p>
-            <% } else { %>
-            <p class="text-styled"> Game in progress...</p>
-            <% } %>
-            <caption>Match score</caption>
+            <caption>Match Score</caption>
             <tr>
-                <th>
-                    <% out.println(currentMatch.getFirstPlayer().getName()); %>
-                </th>
-
-                <th>
-                    <% out.println(currentMatch.getSecondPlayer().getName()); %>
-                </th>
+                <th>Player 1</th>
+                <th>Player 2</th>
             </tr>
-
-            <% for (var set : currentMatch.getSetScores()) {
-
-                out.println("<tr>");
-                out.println("<td>" + set.getFirstPlayerScore() + "</td>");
-                out.println("<td>" + set.getSecondPlayerScore() + "</td>");
-                out.println("</tr>");
-            } %>
-
+            <% for (var set : currentMatch.getSetScores()) { %>
+            <tr>
+                <td><%= set.getFirstPlayerScore() %>
+                </td>
+                <td><%= set.getSecondPlayerScore() %>
+                </td>
+            </tr>
+            <% } %>
         </table>
-
-
     </div>
-    <% if (currentMatch.getWinnerPlayer() == null) { %>
 
-    <div>
+    <% if (currentMatch.getWinnerPlayer() == null) { %>
+    <div class="card">
         <table>
             <caption>Current Set</caption>
-
             <tr>
-                <th>
-                    <% out.println(currentMatch.getFirstPlayer().getName()); %>
-                </th>
-
-                <th>
-                    <% out.println(currentMatch.getSecondPlayer().getName()); %>
-                </th>
+                <th>Player 1</th>
+                <th>Player 2</th>
             </tr>
             <tr>
-                <% out.println("<td>" + currentMatch.getCurrentSet().getFirstPlayerScore() + "</td> ");%>
-                <% out.println("<td>" + currentMatch.getCurrentSet().getSecondPlayerScore() + "</td> ");%>
+                <td><%= currentMatch.getCurrentSet().getFirstPlayerScore() %>
+                </td>
+                <td><%= currentMatch.getCurrentSet().getSecondPlayerScore() %>
+                </td>
             </tr>
         </table>
-
     </div>
 
-    <div>
+    <div class="card">
         <div>
-
-            <p>First player:
-                <% out.println(currentMatch.getFirstPlayer().getName()); %>
+            <p>First player: <%= currentMatch.getFirstPlayer().getName() %>
             </p>
-            <p>score:
-                <% out.println(currentMatch.getGameScore().getFirstPlayerScore().getPointCode()); %>
-                <% out.println(currentMatch.isCurrentFirst ? "&#127934;" : ""); %>
+            <p>
+                Score: <%= currentMatch.getGameScore().getFirstPlayerScore().getPointCode() %><%= currentMatch.isCurrentFirst ? "&#127934;" : "" %>
             </p>
-
             <form method="post">
-
                 <button class="btn" name="winner" value="first">Take score for first player</button>
-
             </form>
         </div>
         <div>
-            <p>second:
-                <% out.println(currentMatch.getSecondPlayer().getName()); %>
+            <p>Second player: <%= currentMatch.getSecondPlayer().getName() %>
             </p>
-            <p>score:
-                <% out.println(currentMatch.getGameScore().getSecondPlayerScore().getPointCode()); %>
-                <% out.println(currentMatch.isCurrentFirst ? "" : "&#127934;"); %>
+            <p>
+                Score: <%= currentMatch.getGameScore().getSecondPlayerScore().getPointCode() %><%= currentMatch.isCurrentFirst ? "" : "&#127934;" %>
             </p>
             <form method="post">
-
                 <button class="btn" name="winner" value="second">Take score for second player</button>
-
             </form>
         </div>
-
-
     </div>
-
-
     <% } %>
-
-
     <% } else { %>
-
-    <div>
-
-        <p class="text-styled">Match not found</p>
+    <div class="match-not-found">
+        <p>Match not found</p>
     </div>
-
     <% } %>
-
 </div>
+<footer>
+    <button onclick="goUpOneLevel()" class="btn btn-back">Go Back</button>
+</footer>
+<script src="scripts/goUpOneLevel.js"></script>
 </body>
-
 </html>
