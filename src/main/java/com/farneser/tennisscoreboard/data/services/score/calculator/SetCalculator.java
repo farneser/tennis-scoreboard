@@ -10,7 +10,7 @@ public class SetCalculator implements ICalculator {
         match.getCurrentSet().setWinner(match.getCurrentSet().getWinner(winner) + 1, winner);
 
         if (match.getCurrentSet().getWinner(winner) > 5) {
-            if (match.getCurrentSet().getWinner(winner) - match.getCurrentSet().getLooser(winner) >= 2 || match.getCurrentSet().getWinner(winner) == 7) {
+            if (match.getCurrentSet().getWinner(winner) - match.getCurrentSet().getLooser(winner) >= 2 && match.getCurrentSet().getWinner(winner) >= 7 || match.getCurrentSet().getWinner(winner) == 6 && match.getCurrentSet().getLooser(winner) <= 4) {
                 match.refreshCurrentSet();
                 return WinnerType.convertToState(winner);
             }
