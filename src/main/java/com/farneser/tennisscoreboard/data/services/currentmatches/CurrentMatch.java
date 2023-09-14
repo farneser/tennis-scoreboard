@@ -4,6 +4,8 @@ import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.services.score.GamePoints;
 import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
+import com.farneser.tennisscoreboard.data.services.score.calculator.GameCalculator;
+import com.farneser.tennisscoreboard.data.services.score.calculator.IGameCalculator;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class CurrentMatch {
     private PlayersScore<Integer> currentSet = new PlayersScore<>();
     private List<PlayersScore<Integer>> setScores = new ArrayList<>();
     private PlayersScore<GamePoints> gameScore = new PlayersScore<>();
+    private IGameCalculator currentGame;
 
     public CurrentMatch(UUID id, Player firstPlayer, Player secondPlayer, int setsCount) {
         this.id = id;
@@ -42,6 +45,8 @@ public class CurrentMatch {
 
         this.currentSet.setFirstPlayerScore(0);
         this.currentSet.setSecondPlayerScore(0);
+
+        currentGame = new GameCalculator();
     }
 
     /**
