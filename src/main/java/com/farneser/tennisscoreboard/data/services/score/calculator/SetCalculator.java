@@ -7,6 +7,11 @@ import com.farneser.tennisscoreboard.data.services.score.State;
 public class SetCalculator implements ICalculator {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
+
+        if (new GameCalculator().process(match, winner) == State.GameInProcess) {
+            return State.GameInProcess;
+        }
+
         match.getCurrentSet().setWinner(match.getCurrentSet().getWinner(winner) + 1, winner);
 
         if (match.getCurrentSet().getWinner(winner) > 5) {

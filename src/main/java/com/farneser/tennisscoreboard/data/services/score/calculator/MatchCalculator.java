@@ -12,6 +12,10 @@ public class MatchCalculator implements ICalculator {
             return match.getWinnerPlayer() == match.getFirstPlayer() ? State.FirstPlayer : State.SecondPlayer;
         }
 
+        if (new SetCalculator().process(match, winner) == State.GameInProcess) {
+            return State.GameInProcess;
+        }
+
         System.out.println(winner + " wins the set");
 
         var setsWonCounter = 0;

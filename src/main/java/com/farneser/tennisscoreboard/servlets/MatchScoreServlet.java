@@ -1,9 +1,9 @@
 package com.farneser.tennisscoreboard.servlets;
 
 import com.farneser.tennisscoreboard.data.services.FinishedMatchService;
-import com.farneser.tennisscoreboard.data.services.ScoreService;
 import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatchesService;
 import com.farneser.tennisscoreboard.data.services.score.State;
+import com.farneser.tennisscoreboard.data.services.score.calculator.MatchCalculator;
 import com.farneser.tennisscoreboard.data.utils.ParseParamsUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,7 +43,7 @@ public class MatchScoreServlet extends HttpServlet {
 
             logger.info("match " + currentMatch.getId() + " in progress");
 
-            var state = new ScoreService().process(currentMatch, gameScore.winner());
+            var state = new MatchCalculator().process(currentMatch, gameScore.winner());
 
             if (state != State.GameInProcess) {
                 logger.info("match " + currentMatch.getId() + " finished with winner=" + currentMatch.getWinnerPlayer());
