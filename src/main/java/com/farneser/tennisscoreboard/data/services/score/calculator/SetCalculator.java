@@ -8,16 +8,22 @@ public class SetCalculator implements ICalculator {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
 
-        if (new GameCalculator().process(match, winner) == State.GameInProcess) {
+        if (match.getCurrentGame().process(match, winner) == State.GameInProcess) {
             return State.GameInProcess;
         }
 
         match.getCurrentSet().setWinner(match.getCurrentSet().getWinner(winner) + 1, winner);
 
         if (match.getCurrentSet().getWinner(winner) > 5) {
-            if (match.getCurrentSet().getWinner(winner) - match.getCurrentSet().getLooser(winner) >= 2 && match.getCurrentSet().getWinner(winner) >= 7 || match.getCurrentSet().getWinner(winner) == 6 && match.getCurrentSet().getLooser(winner) <= 4) {
+
+            if (match.getCurrentSet().getWinner(winner) == 7 || match.getCurrentSet().getWinner(winner) == 6 && match.getCurrentSet().getLooser(winner) <= 4) {
                 match.refreshCurrentSet();
+
+                match.setCurrentGame(new GameCalculator());
+
                 return WinnerType.convertToState(winner);
+            } else if (match.getCurrentSet().getFirstPlayerScore().equals(match.getCurrentSet().getSecondPlayerScore()) && match.getCurrentSet().getSecondPlayerScore() == 6) {
+                match.setCurrentGame(new TieBreakCalculator());
             }
         }
 
