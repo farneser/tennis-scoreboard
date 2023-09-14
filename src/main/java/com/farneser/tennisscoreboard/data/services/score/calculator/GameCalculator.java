@@ -7,12 +7,11 @@ import com.farneser.tennisscoreboard.data.services.score.State;
 
 import java.util.logging.Logger;
 
-public class GameCalculator implements ICalculator {
+public class GameCalculator extends CurrentGameCalculator<GamePoints> {
     private final Logger logger = Logger.getLogger(GameCalculator.class.getName());
 
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
-        var gameScore = match.getGameScore();
 
         if (gameScore.getWinner(winner).ordinal() > gameScore.getLooser(winner).ordinal()) {
             if (gameScore.getWinner(winner).ordinal() >= GamePoints.Forty.ordinal()) {
@@ -29,7 +28,7 @@ public class GameCalculator implements ICalculator {
 
         }
 
-        logger.info("game " + match.getId() + " continues with score " + match.getGameScore());
+        logger.info("game " + match.getId() + " continues with score " + gameScore);
 
         if (gameScore.getWinner(winner) != GamePoints.Advantage) {
             gameScore.setWinner(gameScore.getWinner(winner).next(), winner);
@@ -44,5 +43,10 @@ public class GameCalculator implements ICalculator {
         }
 
         return State.GameInProcess;
+    }
+
+    @Override
+    protected GamePoints getInitialValue() {
+        return GamePoints.Zero;
     }
 }

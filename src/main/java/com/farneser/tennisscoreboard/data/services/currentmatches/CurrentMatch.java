@@ -2,10 +2,9 @@ package com.farneser.tennisscoreboard.data.services.currentmatches;
 
 import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
-import com.farneser.tennisscoreboard.data.services.score.GamePoints;
 import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
 import com.farneser.tennisscoreboard.data.services.score.calculator.GameCalculator;
-import com.farneser.tennisscoreboard.data.services.score.calculator.IGameCalculator;
+import com.farneser.tennisscoreboard.data.services.score.calculator.CurrentGameCalculator;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -27,8 +26,7 @@ public class CurrentMatch {
     private Player winnerPlayer;
     private PlayersScore<Integer> currentSet = new PlayersScore<>();
     private List<PlayersScore<Integer>> setScores = new ArrayList<>();
-    private PlayersScore<GamePoints> gameScore = new PlayersScore<>();
-    private IGameCalculator currentGame;
+    private CurrentGameCalculator<?> currentGame;
 
     public CurrentMatch(UUID id, Player firstPlayer, Player secondPlayer, int setsCount) {
         this.id = id;
@@ -39,9 +37,6 @@ public class CurrentMatch {
         var rnd = new Random();
 
         isCurrentFirst = rnd.nextBoolean();
-
-        this.gameScore.setFirstPlayerScore(GamePoints.Zero);
-        this.gameScore.setSecondPlayerScore(GamePoints.Zero);
 
         this.currentSet.setFirstPlayerScore(0);
         this.currentSet.setSecondPlayerScore(0);
