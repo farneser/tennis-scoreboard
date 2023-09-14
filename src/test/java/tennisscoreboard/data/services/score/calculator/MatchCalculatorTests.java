@@ -3,7 +3,6 @@ package tennisscoreboard.data.services.score.calculator;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.entities.dto.WinnerType;
 import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatch;
-import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
 import com.farneser.tennisscoreboard.data.services.score.calculator.MatchCalculator;
 import junit.framework.TestCase;
 
@@ -15,44 +14,46 @@ public class MatchCalculatorTests extends TestCase {
     public void testFirstPlayerWin() {
         var currentMatch = new CurrentMatch(UUID.randomUUID(), new Player(), new Player(), 3);
 
+        for (var n = 0; n < 2; n++) {
 
-        for (var i = 0; i < 2; i++) {
-            var playerScore = new PlayersScore<Integer>();
+            for (var i = 0; i < 16; i++) {
+                matchCalculator.process(currentMatch, WinnerType.FirstPlayer);
+            }
 
-            playerScore.setFirstPlayerScore(6);
-            playerScore.setSecondPlayerScore(4);
+            for (var i = 0; i < 16; i++) {
+                matchCalculator.process(currentMatch, WinnerType.SecondPlayer);
+            }
 
-            currentMatch.setCurrentSet(playerScore);
-            currentMatch.refreshCurrentSet();
-
-            var result = matchCalculator.process(currentMatch, WinnerType.FirstPlayer);
-
-            System.out.println(result);
+            for (var i = 0; i < 8; i++) {
+                matchCalculator.process(currentMatch, WinnerType.FirstPlayer);
+            }
         }
+
 
         assert currentMatch.getWinnerPlayer() != null;
         assert currentMatch.getWinnerPlayer() == currentMatch.getFirstPlayer();
     }
 
     public void testSecondPlayerWin() {
-        var currentMatch = new CurrentMatch(UUID.randomUUID(), new Player(), new Player(), 5);
+        var currentMatch = new CurrentMatch(UUID.randomUUID(), new Player(), new Player(), 3);
 
+        for (var n = 0; n < 2; n++) {
 
-        for (var i = 0; i < 3; i++) {
-            var playerScore = new PlayersScore<Integer>();
+            for (var i = 0; i < 16; i++) {
+                matchCalculator.process(currentMatch, WinnerType.SecondPlayer);
+            }
 
-            playerScore.setFirstPlayerScore(3);
-            playerScore.setSecondPlayerScore(6);
+            for (var i = 0; i < 16; i++) {
+                matchCalculator.process(currentMatch, WinnerType.FirstPlayer);
+            }
 
-            currentMatch.setCurrentSet(playerScore);
-            currentMatch.refreshCurrentSet();
-
-            var result = matchCalculator.process(currentMatch, WinnerType.SecondPlayer);
-
-            System.out.println(result);
+            for (var i = 0; i < 8; i++) {
+                matchCalculator.process(currentMatch, WinnerType.SecondPlayer);
+            }
         }
 
         assert currentMatch.getWinnerPlayer() != null;
         assert currentMatch.getWinnerPlayer() == currentMatch.getSecondPlayer();
     }
+
 }

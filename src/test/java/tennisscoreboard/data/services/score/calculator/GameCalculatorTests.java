@@ -69,8 +69,8 @@ public class GameCalculatorTests extends TestCase {
         System.out.println("40:40");
 
         assertSame("score tha same",
-                currentMatch.getGameScore().getFirstPlayerScore(),
-                currentMatch.getGameScore().getSecondPlayerScore());
+                currentMatch.getCurrentGame().getGameScore().getFirstPlayerScore(),
+                currentMatch.getCurrentGame().getGameScore().getSecondPlayerScore());
 
         result = gameCalculator.process(currentMatch, WinnerType.SecondPlayer);
         assertSame("score wins", result, State.GameInProcess);
@@ -83,8 +83,8 @@ public class GameCalculatorTests extends TestCase {
         System.out.println("40:40");
 
         assertSame("score tha same",
-                currentMatch.getGameScore().getFirstPlayerScore(),
-                currentMatch.getGameScore().getSecondPlayerScore());
+                currentMatch.getCurrentGame().getGameScore().getFirstPlayerScore(),
+                currentMatch.getCurrentGame().getGameScore().getSecondPlayerScore());
 
         result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
         assertSame("score wins", result, State.GameInProcess);
