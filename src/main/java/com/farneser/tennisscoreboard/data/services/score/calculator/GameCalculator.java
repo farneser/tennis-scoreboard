@@ -13,11 +13,11 @@ public class GameCalculator extends CurrentGameCalculator<GamePoints> {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
 
-        if (gameScore.getWinner(winner).ordinal() > gameScore.getLooser(winner).ordinal()) {
-            if (gameScore.getWinner(winner).ordinal() >= GamePoints.Forty.ordinal()) {
+        if (this.getWinner(winner).ordinal() > this.getLooser(winner).ordinal()) {
+            if (this.getWinner(winner).ordinal() >= GamePoints.Forty.ordinal()) {
 
-                gameScore.setFirstPlayerScore(GamePoints.Zero);
-                gameScore.setSecondPlayerScore(GamePoints.Zero);
+                this.setFirstPlayerScore(GamePoints.Zero);
+                this.setSecondPlayerScore(GamePoints.Zero);
 
                 if (winner == WinnerType.FirstPlayer) {
                     return State.FirstPlayer;
@@ -28,17 +28,17 @@ public class GameCalculator extends CurrentGameCalculator<GamePoints> {
 
         }
 
-        logger.info("game " + match.getId() + " continues with score " + gameScore);
+        logger.info("game " + match.getId() + " continues with score " + this);
 
-        if (gameScore.getWinner(winner) != GamePoints.Advantage) {
-            gameScore.setWinner(gameScore.getWinner(winner).next(), winner);
+        if (this.getWinner(winner) != GamePoints.Advantage) {
+            this.setWinner(this.getWinner(winner).next(), winner);
         }
 
-        if (gameScore.getWinner(winner) == gameScore.getLooser(winner)) {
+        if (this.getWinner(winner) == this.getLooser(winner)) {
             // 40:40, AD:AD, 40:AD, AD:40
-            if (gameScore.getWinner(winner) == GamePoints.Advantage) {
-                gameScore.setFirstPlayerScore(GamePoints.Forty);
-                gameScore.setSecondPlayerScore(GamePoints.Forty);
+            if (this.getWinner(winner) == GamePoints.Advantage) {
+                this.setFirstPlayerScore(GamePoints.Forty);
+                this.setSecondPlayerScore(GamePoints.Forty);
             }
         }
 

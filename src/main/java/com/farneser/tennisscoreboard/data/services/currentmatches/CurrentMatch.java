@@ -3,8 +3,8 @@ package com.farneser.tennisscoreboard.data.services.currentmatches;
 import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
 import com.farneser.tennisscoreboard.data.services.score.PlayersScore;
-import com.farneser.tennisscoreboard.data.services.score.calculator.GameCalculator;
 import com.farneser.tennisscoreboard.data.services.score.calculator.CurrentGameCalculator;
+import com.farneser.tennisscoreboard.data.services.score.calculator.GameCalculator;
 import lombok.Data;
 
 import java.util.ArrayList;

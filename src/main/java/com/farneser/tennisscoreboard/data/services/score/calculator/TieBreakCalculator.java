@@ -12,12 +12,12 @@ public class TieBreakCalculator extends CurrentGameCalculator<Integer> {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
 
-        gameScore.setWinner(gameScore.getWinner(winner) + 1, winner);
+        this.setWinner(this.getWinner(winner) + 1, winner);
 
-        logger.info("tie break " + match.getId() + " " + gameScore);
+        logger.info("tie break " + match.getId() + " " + this);
 
-        if (gameScore.getWinner(winner) >= 6 && gameScore.getWinner(winner) - gameScore.getLooser(winner) >= 2) {
-            return gameScore.getWinner(winner).equals(gameScore.getFirstPlayerScore()) ? State.FirstPlayer : State.SecondPlayer;
+        if (this.getWinner(winner) >= 6 && this.getWinner(winner) - this.getLooser(winner) >= 2) {
+            return this.getWinner(winner).equals(this.getFirstPlayerScore()) ? State.FirstPlayer : State.SecondPlayer;
         }
 
         return State.GameInProcess;
