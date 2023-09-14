@@ -22,4 +22,8 @@ public enum GamePoints {
         }
     }
 
+    @Override
+    public String toString() {
+        return pointCode;
+    }
 }

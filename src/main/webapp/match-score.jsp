@@ -55,7 +55,7 @@
             <p>First player: <%= currentMatch.getFirstPlayer().getName() %>
             </p>
             <p>
-                Score: <%= currentMatch.getGameScore().getFirstPlayerScore().getPointCode() %><%= currentMatch.isCurrentFirst ? "&#127934;" : "" %>
+                Score: <%= currentMatch.getCurrentGame().getGameScore().getFirstPlayerScore().toString() %><%= currentMatch.isCurrentFirst ? "&#127934;" : "" %>
             </p>
             <form method="post">
                 <button class="btn" name="winner" value="first">Take score for first player</button>
@@ -65,7 +65,7 @@
             <p>Second player: <%= currentMatch.getSecondPlayer().getName() %>
             </p>
             <p>
-                Score: <%= currentMatch.getGameScore().getSecondPlayerScore().getPointCode() %><%= currentMatch.isCurrentFirst ? "" : "&#127934;" %>
+                Score: <%= currentMatch.getCurrentGame().getGameScore().getSecondPlayerScore().toString() %><%= currentMatch.isCurrentFirst ? "" : "&#127934;" %>
             </p>
             <form method="post">
                 <button class="btn" name="winner" value="second">Take score for second player</button>
