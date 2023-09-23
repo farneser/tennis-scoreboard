@@ -14,39 +14,39 @@ public class GameCalculator extends CurrentGameCalculator<GamePoints> {
     public State process(CurrentMatch match, WinnerType winner) {
 
         if (this.getWinner(winner).ordinal() > this.getLooser(winner).ordinal()) {
-            if (this.getWinner(winner).ordinal() >= GamePoints.Forty.ordinal()) {
+            if (this.getWinner(winner).ordinal() >= GamePoints.FORTY.ordinal()) {
 
-                this.setFirstPlayerScore(GamePoints.Zero);
-                this.setSecondPlayerScore(GamePoints.Zero);
+                this.setFirstPlayerScore(GamePoints.LOVE);
+                this.setSecondPlayerScore(GamePoints.LOVE);
 
                 if (winner == WinnerType.FirstPlayer) {
-                    return State.FirstPlayer;
+                    return State.FIRST_PLAYER;
                 }
 
-                return State.SecondPlayer;
+                return State.SECOND_PLAYER;
             }
 
         }
 
         logger.info("game " + match.getId() + " continues with score " + this);
 
-        if (this.getWinner(winner) != GamePoints.Advantage) {
+        if (this.getWinner(winner) != GamePoints.ADVANTAGE) {
             this.setWinner(this.getWinner(winner).next(), winner);
         }
 
         if (this.getWinner(winner) == this.getLooser(winner)) {
             // 40:40, AD:AD, 40:AD, AD:40
-            if (this.getWinner(winner) == GamePoints.Advantage) {
-                this.setFirstPlayerScore(GamePoints.Forty);
-                this.setSecondPlayerScore(GamePoints.Forty);
+            if (this.getWinner(winner) == GamePoints.ADVANTAGE) {
+                this.setFirstPlayerScore(GamePoints.FORTY);
+                this.setSecondPlayerScore(GamePoints.FORTY);
             }
         }
 
-        return State.GameInProcess;
+        return State.GAME_IN_PROCESS;
     }
 
     @Override
     protected GamePoints getInitialValue() {
-        return GamePoints.Zero;
+        return GamePoints.LOVE;
     }
 }

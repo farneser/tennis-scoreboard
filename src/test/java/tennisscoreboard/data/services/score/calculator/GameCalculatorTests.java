@@ -20,12 +20,12 @@ public class GameCalculatorTests extends TestCase {
 
         for (var i = 0; i < 3; i++) {
             result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
-            assertSame("score calculates", result, State.GameInProcess);
+            assertSame("score calculates", result, State.GAME_IN_PROCESS);
         }
 
         result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
 
-        assertSame("FirstPlayer wins", result, State.FirstPlayer);
+        assertSame("FirstPlayer wins", result, State.FIRST_PLAYER);
     }
 
     public void testSecondPlayerWin() {
@@ -35,12 +35,12 @@ public class GameCalculatorTests extends TestCase {
 
         for (var i = 0; i < 3; i++) {
             result = gameCalculator.process(currentMatch, WinnerType.SecondPlayer);
-            assertSame("score calculates", result, State.GameInProcess);
+            assertSame("score calculates", result, State.GAME_IN_PROCESS);
         }
 
         result = gameCalculator.process(currentMatch, WinnerType.SecondPlayer);
 
-        assertSame("SecondPlayer wins", result, State.SecondPlayer);
+        assertSame("SecondPlayer wins", result, State.SECOND_PLAYER);
     }
 
     public void testAdvancedPlayersWin() {
@@ -50,21 +50,21 @@ public class GameCalculatorTests extends TestCase {
 
         for (var i = 0; i < 3; i++) {
             result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
-            assertSame("score calculates", result, State.GameInProcess);
+            assertSame("score calculates", result, State.GAME_IN_PROCESS);
 
             result = gameCalculator.process(currentMatch, WinnerType.SecondPlayer);
-            assertSame("score calculates", result, State.GameInProcess);
+            assertSame("score calculates", result, State.GAME_IN_PROCESS);
         }
 
         System.out.println("40:40");
 
         result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
-        assertSame("score wins", result, State.GameInProcess);
+        assertSame("score wins", result, State.GAME_IN_PROCESS);
 
         System.out.println("AD:40");
 
         result = gameCalculator.process(currentMatch, WinnerType.SecondPlayer);
-        assertSame("score wins", result, State.GameInProcess);
+        assertSame("score wins", result, State.GAME_IN_PROCESS);
 
         System.out.println("40:40");
 
@@ -73,12 +73,12 @@ public class GameCalculatorTests extends TestCase {
                 currentMatch.getCurrentGame().getSecondPlayerScore());
 
         result = gameCalculator.process(currentMatch, WinnerType.SecondPlayer);
-        assertSame("score wins", result, State.GameInProcess);
+        assertSame("score wins", result, State.GAME_IN_PROCESS);
 
         System.out.println("40:AD");
 
         result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
-        assertSame("score wins", result, State.GameInProcess);
+        assertSame("score wins", result, State.GAME_IN_PROCESS);
 
         System.out.println("40:40");
 
@@ -87,12 +87,12 @@ public class GameCalculatorTests extends TestCase {
                 currentMatch.getCurrentGame().getSecondPlayerScore());
 
         result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
-        assertSame("score wins", result, State.GameInProcess);
+        assertSame("score wins", result, State.GAME_IN_PROCESS);
 
         System.out.println("AD:40");
 
         result = gameCalculator.process(currentMatch, WinnerType.FirstPlayer);
-        assertSame("FirstPlayer wins", result, State.FirstPlayer);
+        assertSame("FirstPlayer wins", result, State.FIRST_PLAYER);
 
         System.out.println("WIN:40");
     }

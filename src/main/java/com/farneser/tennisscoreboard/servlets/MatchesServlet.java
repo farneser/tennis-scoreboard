@@ -16,7 +16,7 @@ public class MatchesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        var matchesDto = ParseParamsUtil.ParseGetMatches(req);
+        var matchesDto = ParseParamsUtil.parseGetMatches(req);
 
         var servletContext = getServletContext();
 

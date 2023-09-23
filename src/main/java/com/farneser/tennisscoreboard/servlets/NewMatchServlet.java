@@ -28,7 +28,7 @@ public class NewMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        var createMatchDto = ParseParamsUtil.ParsePostNewMatch(req);
+        var createMatchDto = ParseParamsUtil.parsePostNewMatch(req);
 
         var firstPlayer = new Player(createMatchDto.firstPlayerName());
         var secondPlayer = new Player(createMatchDto.secondPlayerName());

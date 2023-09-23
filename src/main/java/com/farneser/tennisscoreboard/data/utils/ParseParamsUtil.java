@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class ParseParamsUtil {
 
-    public static CreateMatchDto ParsePostNewMatch(HttpServletRequest req) {
+    public static CreateMatchDto parsePostNewMatch(HttpServletRequest req) {
 
         // there we can throw exception if player1 or player 2 is null
         // handle exception and return error message
@@ -26,15 +26,15 @@ public class ParseParamsUtil {
         return new CreateMatchDto(player1, player2, setsCount);
     }
 
-    public static UUID ParseGetMatchScore(HttpServletRequest req) {
+    public static UUID parseGetMatchScore(HttpServletRequest req) {
 
         var id = req.getParameter("uuid");
 
         return UUID.fromString(id);
     }
 
-    public static GameScoreDto ParsePostMatchScope(HttpServletRequest req) {
-        var id = ParseParamsUtil.ParseGetMatchScore(req);
+    public static GameScoreDto parsePostMatchScope(HttpServletRequest req) {
+        var id = ParseParamsUtil.parseGetMatchScore(req);
 
         var winner = WinnerType.FirstPlayer;
 
@@ -45,7 +45,7 @@ public class ParseParamsUtil {
         return new GameScoreDto(id, winner);
     }
 
-    public static MatchesDto ParseGetMatches(HttpServletRequest req) {
+    public static MatchesDto parseGetMatches(HttpServletRequest req) {
         var page = 1;
 
         try {

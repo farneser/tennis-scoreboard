@@ -20,10 +20,10 @@ public class SetCalculatorTests extends TestCase {
             var result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
 
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
-        assert setCalculator.process(currentMatch, WinnerType.FirstPlayer) == State.FirstPlayer;
+        assert setCalculator.process(currentMatch, WinnerType.FirstPlayer) == State.FIRST_PLAYER;
     }
 
     public void testSecondPlayerWin() {
@@ -34,10 +34,10 @@ public class SetCalculatorTests extends TestCase {
             var result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
 
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
-        assert setCalculator.process(currentMatch, WinnerType.SecondPlayer) == State.SecondPlayer;
+        assert setCalculator.process(currentMatch, WinnerType.SecondPlayer) == State.SECOND_PLAYER;
     }
 
     public void testTieBreak() {
@@ -46,70 +46,70 @@ public class SetCalculatorTests extends TestCase {
         for (var i = 0; i < 20; i++) {
             var result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
         for (var i = 0; i < 20; i++) {
             var result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
         for (var i = 0; i < 4; i++) {
             var result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
         for (var i = 0; i < 4; i++) {
             var result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
         for (var i = 0; i < 5; i++) {
             var result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
         for (var i = 0; i < 5; i++) {
             var result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
             System.out.println(result);
-            assert result == State.GameInProcess;
+            assert result == State.GAME_IN_PROCESS;
         }
 
         var result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.FirstPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
         System.out.println(result);
-        assert result == State.GameInProcess;
+        assert result == State.GAME_IN_PROCESS;
 
         result = setCalculator.process(currentMatch, WinnerType.SecondPlayer);
         System.out.println(result);
-        assert result == State.SecondPlayer;
+        assert result == State.SECOND_PLAYER;
 
     }
 }

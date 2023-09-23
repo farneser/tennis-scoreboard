@@ -17,10 +17,10 @@ public class TieBreakCalculator extends CurrentGameCalculator<Integer> {
         logger.info("tie break " + match.getId() + " " + this);
 
         if (this.getWinner(winner) >= 6 && this.getWinner(winner) - this.getLooser(winner) >= 2) {
-            return this.getWinner(winner).equals(this.getFirstPlayerScore()) ? State.FirstPlayer : State.SecondPlayer;
+            return this.getWinner(winner).equals(this.getFirstPlayerScore()) ? State.FIRST_PLAYER : State.SECOND_PLAYER;
         }
 
-        return State.GameInProcess;
+        return State.GAME_IN_PROCESS;
     }
 
     @Override

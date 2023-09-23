@@ -9,11 +9,11 @@ public class MatchCalculator implements ICalculator {
     public State process(CurrentMatch match, WinnerType winner) {
 
         if (match.getWinnerPlayer() != null) {
-            return match.getWinnerPlayer() == match.getFirstPlayer() ? State.FirstPlayer : State.SecondPlayer;
+            return match.getWinnerPlayer() == match.getFirstPlayer() ? State.FIRST_PLAYER : State.SECOND_PLAYER;
         }
 
-        if (new SetCalculator().process(match, winner) == State.GameInProcess) {
-            return State.GameInProcess;
+        if (new SetCalculator().process(match, winner) == State.GAME_IN_PROCESS) {
+            return State.GAME_IN_PROCESS;
         }
 
         System.out.println(winner + " wins the set");
@@ -35,6 +35,6 @@ public class MatchCalculator implements ICalculator {
             return WinnerType.convertToState(winner);
         }
 
-        return State.GameInProcess;
+        return State.GAME_IN_PROCESS;
     }
 }

@@ -26,7 +26,7 @@ public class MatchScoreServlet extends HttpServlet {
 
         servletContext.setAttribute(
                 "currentMatch",
-                currentMatchesService.get(ParseParamsUtil.ParseGetMatchScore(req))
+                currentMatchesService.get(ParseParamsUtil.parseGetMatchScore(req))
         );
 
         getServletContext().getRequestDispatcher("/match-score.jsp").forward(req, resp);
@@ -35,7 +35,7 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        var gameScore = ParseParamsUtil.ParsePostMatchScope(req);
+        var gameScore = ParseParamsUtil.parsePostMatchScope(req);
 
         var currentMatch = currentMatchesService.get(gameScore.id());
 
@@ -45,7 +45,7 @@ public class MatchScoreServlet extends HttpServlet {
 
             var state = new MatchCalculator().process(currentMatch, gameScore.winner());
 
-            if (state != State.GameInProcess) {
+            if (state != State.GAME_IN_PROCESS) {
                 logger.info("match " + currentMatch.getId() + " finished with winner=" + currentMatch.getWinnerPlayer());
                 new FinishedMatchService().save(currentMatch);
             }

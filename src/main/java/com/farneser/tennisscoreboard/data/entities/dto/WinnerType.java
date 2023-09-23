@@ -8,9 +8,9 @@ public enum WinnerType {
 
     public static State convertToState(WinnerType winner) {
         if (winner == WinnerType.FirstPlayer) {
-            return State.FirstPlayer;
+            return State.FIRST_PLAYER;
         }
 
-        return State.SecondPlayer;
+        return State.SECOND_PLAYER;
     }
 }

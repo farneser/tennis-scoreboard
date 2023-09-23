@@ -8,8 +8,8 @@ public class SetCalculator implements ICalculator {
     @Override
     public State process(CurrentMatch match, WinnerType winner) {
 
-        if (match.getCurrentGame().process(match, winner) == State.GameInProcess) {
-            return State.GameInProcess;
+        if (match.getCurrentGame().process(match, winner) == State.GAME_IN_PROCESS) {
+            return State.GAME_IN_PROCESS;
         }
 
         match.getCurrentSet().setWinner(match.getCurrentSet().getWinner(winner) + 1, winner);
@@ -27,6 +27,6 @@ public class SetCalculator implements ICalculator {
             }
         }
 
-        return State.GameInProcess;
+        return State.GAME_IN_PROCESS;
     }
 }
