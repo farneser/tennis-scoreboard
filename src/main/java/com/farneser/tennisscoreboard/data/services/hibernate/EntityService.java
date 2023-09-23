@@ -13,26 +13,6 @@ public abstract class EntityService<T> {
 
     private final Logger logger = Logger.getLogger(EntityService.class.getName());
 
-    public static void main(String[] args) {
-        var matchService = new MatchService();
-        var playerService = new PlayerService();
-
-
-        var first = new Player("andrmeow");
-        var second = new Player("anastasiya");
-
-        playerService.persist(first);
-        playerService.persist(second);
-
-        matchService.persist(new Match(first, second, first));
-        playerService.persist(first);
-
-        playerService.get().forEach(System.out::println);
-
-        matchService.get().forEach(System.out::println);
-
-    }
-
     public void persist(T object) {
 
         var message = "create " + object;

@@ -52,22 +52,6 @@ public class MatchService extends EntityService<Match> {
 
     private final Logger logger = Logger.getLogger(MatchService.class.getName());
 
-    public static void main(String[] args) {
-        var matchService = new MatchService();
-
-        var lastPage = matchService.getLastPage(15);
-        System.out.println(lastPage);
-        var count = matchService.getCount();
-        System.out.println(count);
-        var res = matchService.get(3, 12, null);
-
-        System.out.println(res);
-
-        res = matchService.get(0, 10, "Vlad");
-
-        System.out.println(res);
-    }
-
     public Long getCount() {
         var session = HibernateFactory.getSessionFactory().openSession();
 

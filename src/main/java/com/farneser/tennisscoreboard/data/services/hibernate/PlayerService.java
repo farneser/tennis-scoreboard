@@ -10,18 +10,6 @@ import java.util.logging.Logger;
 public class PlayerService extends EntityService<Player> {
     private final Logger logger = Logger.getLogger(PlayerService.class.getName());
 
-    public static void main(String[] args) {
-        var player = new Player("Andmeow");
-
-        new PlayerService().persist(player);
-
-        var session = HibernateFactory.getSessionFactory().openSession();
-
-        var res = session.createQuery("FROM Player", Player.class).list();
-
-        System.out.println(res);
-    }
-
     @Override
     public List<Player> get() {
         var session = HibernateFactory.getSessionFactory().openSession();
