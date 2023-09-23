@@ -28,7 +28,7 @@
 
 MatchesService:
 
-- public MatchListViewModel persist(MatchesDto matchesDto) - по названию метода и аргументу, я бы подумал, что он
+- ✓ public MatchListViewModel persist(MatchesDto matchesDto) - по названию метода и аргументу, я бы подумал, что он
   отвечает за сохранение списка матчей в БД. По факту, он занимается чтением матчей. Необходимо, чтобы название
   совпадало со смыслом метода - public MatchListViewModel findMatch(findMatchesDto matchesDto)
 

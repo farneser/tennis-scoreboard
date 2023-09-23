@@ -8,11 +8,11 @@ import com.farneser.tennisscoreboard.data.services.hibernate.MatchService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchesService {
+public class MatchFactory {
 
     private final MatchService matchService = new MatchService();
 
-    public MatchListViewModel persist(MatchesDto matchesDto) {
+    public MatchListViewModel findMatch(MatchesDto matchesDto) {
         var pageSize = 10;
 
         List<Match> matches = new ArrayList<>();

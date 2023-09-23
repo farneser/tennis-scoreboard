@@ -1,6 +1,6 @@
 package com.farneser.tennisscoreboard.servlets;
 
-import com.farneser.tennisscoreboard.data.services.MatchesService;
+import com.farneser.tennisscoreboard.data.services.MatchFactory;
 import com.farneser.tennisscoreboard.data.utils.ParseParamsUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class MatchesServlet extends HttpServlet {
 
         servletContext.setAttribute(
                 "matches",
-                new MatchesService().persist(matchesDto)
+                new MatchFactory().findMatch(matchesDto)
         );
 
         getServletContext().getRequestDispatcher("/matches.jsp").forward(req, resp);
