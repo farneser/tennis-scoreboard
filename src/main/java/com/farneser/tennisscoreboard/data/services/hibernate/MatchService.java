@@ -2,6 +2,7 @@ package com.farneser.tennisscoreboard.data.services.hibernate;
 
 import com.farneser.tennisscoreboard.data.entities.Match;
 import com.farneser.tennisscoreboard.data.entities.Player;
+import com.farneser.tennisscoreboard.data.exceptons.InternalServerException;
 import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
 
 import java.util.ArrayList;
@@ -13,41 +14,47 @@ public class MatchService extends EntityService<Match> {
 
     // demo data
     static {
-        var playerService = new PlayerService();
-        var matchService = new MatchService();
+        try {
 
-        var playerNames = new String[]{
-                "Aleksandr", "Ekaterina", "Ivan", "Anna", "Dmitriy", "Olga", "Maksim",
-                "Natalya", "Sergey", "Tatyana", "Andrey", "Elena", "Vladimir", "Mariya",
-                "Pavel", "Yuliya", "Artem", "Larisa", "Anton", "Irina"
-        };
 
-        var players = new ArrayList<Player>();
+            var playerService = new PlayerService();
+            var matchService = new MatchService();
 
-        for (var playerName : playerNames) {
-            players.add(new Player(playerName));
+            var playerNames = new String[]{
+                    "Aleksandr", "Ekaterina", "Ivan", "Anna", "Dmitriy", "Olga", "Maksim",
+                    "Natalya", "Sergey", "Tatyana", "Andrey", "Elena", "Vladimir", "Mariya",
+                    "Pavel", "Yuliya", "Artem", "Larisa", "Anton", "Irina"
+            };
+
+            var players = new ArrayList<Player>();
+
+            for (var playerName : playerNames) {
+                players.add(new Player(playerName));
+            }
+
+            for (Player player : players) {
+                playerService.persist(player);
+            }
+
+            var random = new Random();
+
+            for (var i = 0; i < 50; i++) {
+
+                var index1 = random.nextInt(players.size());
+                Player player1 = players.get(index1);
+
+                int index2;
+                Player player2;
+
+                do {
+                    index2 = random.nextInt(players.size());
+                    player2 = players.get(index2);
+                } while (index2 == index1);
+
+                matchService.persist(new Match(player1, player2, random.nextBoolean() ? player1 : player2));
+            }
+        } catch (InternalServerException ignored) {
         }
-
-        players.forEach(playerService::persist);
-
-        var random = new Random();
-
-        for (var i = 0; i < 50; i++) {
-
-            var index1 = random.nextInt(players.size());
-            Player player1 = players.get(index1);
-
-            int index2;
-            Player player2;
-
-            do {
-                index2 = random.nextInt(players.size());
-                player2 = players.get(index2);
-            } while (index2 == index1);
-
-            matchService.persist(new Match(player1, player2, random.nextBoolean() ? player1 : player2));
-        }
-
     }
 
     private final Logger logger = Logger.getLogger(MatchService.class.getName());
@@ -99,6 +106,7 @@ public class MatchService extends EntityService<Match> {
 
     public int getLastPage(int pageSize) {
         var matchesCount = getCount();
+
         return getLastPage(pageSize, matchesCount);
     }
 

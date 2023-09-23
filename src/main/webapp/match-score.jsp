@@ -51,6 +51,14 @@
     </div>
 
     <div class="card">
+        <% var errorMessage = request.getServletContext().getAttribute("errorMessage");
+            if (errorMessage != null && !errorMessage.toString().isEmpty()) {%>
+
+        <div class="error-message">
+            <p>Error: <%= errorMessage %>
+            </p>
+        </div>
+        <% } %>
         <div>
             <p>First player: <%= currentMatch.getFirstPlayer().getName() %>
             </p>

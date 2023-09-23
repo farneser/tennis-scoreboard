@@ -1,5 +1,6 @@
 package com.farneser.tennisscoreboard.servlets;
 
+import com.farneser.tennisscoreboard.data.exceptons.InternalServerException;
 import com.farneser.tennisscoreboard.data.services.FinishedMatchService;
 import com.farneser.tennisscoreboard.data.services.currentmatches.CurrentMatchesService;
 import com.farneser.tennisscoreboard.data.services.score.State;
@@ -33,7 +34,9 @@ public class MatchScoreServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+
+        var servletContext = getServletContext();
 
         var gameScore = ParseParamsUtil.parsePostMatchScope(req);
 
@@ -47,7 +50,15 @@ public class MatchScoreServlet extends HttpServlet {
 
             if (state != State.GAME_IN_PROCESS) {
                 logger.info("match " + currentMatch.getId() + " finished with winner=" + currentMatch.getWinnerPlayer());
-                new FinishedMatchService().save(currentMatch);
+                try {
+                    new FinishedMatchService().save(currentMatch);
+                } catch (InternalServerException e) {
+                    servletContext.setAttribute("errorMessage", e.getMessage());
+
+                    getServletContext().getRequestDispatcher("/match-score.jsp").forward(req, resp);
+
+                    return;
+                }
             }
 
         }

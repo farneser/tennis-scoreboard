@@ -1,7 +1,6 @@
 package com.farneser.tennisscoreboard.data.services.hibernate;
 
-import com.farneser.tennisscoreboard.data.entities.Match;
-import com.farneser.tennisscoreboard.data.entities.Player;
+import com.farneser.tennisscoreboard.data.exceptons.InternalServerException;
 import com.farneser.tennisscoreboard.data.utils.HibernateFactory;
 
 import java.util.Arrays;
@@ -13,7 +12,7 @@ public abstract class EntityService<T> {
 
     private final Logger logger = Logger.getLogger(EntityService.class.getName());
 
-    public void persist(T object) {
+    public void persist(T object) throws InternalServerException {
 
         var message = "create " + object;
 
@@ -26,6 +25,8 @@ public abstract class EntityService<T> {
         } catch (Exception e) {
             logger.warning("failed " + message);
             logger.warning(Arrays.toString(e.getStackTrace()));
+
+            throw new InternalServerException(e.getMessage());
         }
     }
 
