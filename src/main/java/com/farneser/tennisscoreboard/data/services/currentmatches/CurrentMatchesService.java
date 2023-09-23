@@ -2,15 +2,15 @@ package com.farneser.tennisscoreboard.data.services.currentmatches;
 
 import com.farneser.tennisscoreboard.data.entities.Player;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class CurrentMatchesService {
     private static final Logger logger = Logger.getLogger(CurrentMatchesService.class.getName());
     private static CurrentMatchesService instance;
-    private final Map<UUID, CurrentMatch> matches = new HashMap<>();
+    private final Map<UUID, CurrentMatch> matches = new ConcurrentHashMap<>();
 
     private CurrentMatchesService() {
     }
