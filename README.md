@@ -2,6 +2,8 @@
 
 [![Java CI with Maven](https://github.com/farneser/tennis-scoreboard/actions/workflows/maven.yml/badge.svg)](https://github.com/farneser/tennis-scoreboard/actions/workflows/maven.yml)
 
+[Ревью за 21.09.2023](review.md)
+
 ## [Задание](https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/)
 
 Веб-приложение, реализующее табло счёта теннисного матча.
@@ -21,6 +23,22 @@
 3. Выбираем путь до своего Tomcat сервера и сохраняем и запускаем
 
 ![stage_3.png](images/stage_3.png)
+
+## Список задач после ревью (помечены "❗" в [ревью](review.md))
+
+MatchesService:
+
+- public MatchListViewModel persist(MatchesDto matchesDto) - по названию метода и аргументу, я бы подумал, что он
+  отвечает за сохранение списка матчей в БД. По факту, он занимается чтением матчей. Необходимо, чтобы название
+  совпадало со смыслом метода - public MatchListViewModel findMatch(findMatchesDto matchesDto)
+
+- Класс HashMap, используемый для хранения текущих матчей, не является потокобезопасным. Необходимо либо защитить
+  хешмапу от одновременного доступа, добавив synchronized на методы create, get, либо вместо HashMap взять
+  ConcurrectHashMap
+
+Hibernate
+
+- Исключения от Hibernate проглатываются, плохая практика
 
 ## Что нужно знать
 
