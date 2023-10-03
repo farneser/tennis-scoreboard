@@ -2,7 +2,7 @@
 
 [![Java CI with Maven](https://github.com/farneser/tennis-scoreboard/actions/workflows/maven.yml/badge.svg)](https://github.com/farneser/tennis-scoreboard/actions/workflows/maven.yml)
 
-[Ревью за 21.09.2023](review.md)
+Спасибо [github/zhukovsd](https://github.com/zhukovsd/) за [Ревью за 21.09.2023](review.md)
 
 ## [Задание](https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/)
 
